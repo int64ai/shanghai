@@ -7,31 +7,31 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0a0a; color: #e0e0e0; }
+  body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; background: #f5f5f5; color: #333; }
   #map { width: 100%; height: 100vh; }
   
   .custom-popup .leaflet-popup-content-wrapper {
-    background: #1a1a2e;
-    color: #e0e0e0;
-    border: 1px solid #333;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    background: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   }
-  .custom-popup .leaflet-popup-tip { background: #1a1a2e; }
+  .custom-popup .leaflet-popup-tip { background: #fff; }
   .custom-popup .leaflet-popup-content { margin: 12px 16px; font-size: 14px; line-height: 1.6; }
-  .popup-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .popup-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #1a1a1a; }
   .popup-subtitle { font-size: 12px; color: #888; margin-bottom: 6px; }
-  .popup-desc { font-size: 13px; color: #aaa; }
-  .popup-distance { font-size: 12px; color: #64b5f6; margin-top: 4px; }
+  .popup-desc { font-size: 13px; color: #555; }
+  .popup-distance { font-size: 12px; color: #2979ff; margin-top: 4px; }
 
   .legend {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(26, 26, 46, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border: 1px solid #333;
+    border: 1px solid #ddd;
     border-radius: 12px;
     padding: 12px 20px;
     z-index: 1000;
@@ -40,6 +40,7 @@
     flex-wrap: wrap;
     justify-content: center;
     max-width: 90vw;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   }
   .legend-item {
     display: flex;
@@ -47,6 +48,7 @@
     gap: 6px;
     font-size: 13px;
     white-space: nowrap;
+    color: #444;
   }
   .legend-dot {
     width: 10px;
@@ -60,30 +62,61 @@
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(26, 26, 46, 0.9);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #ddd;
     padding: 12px 20px;
     z-index: 1000;
     text-align: center;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
   }
-  .title-bar h1 { font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+  .title-bar h1 { font-size: 18px; font-weight: 700; letter-spacing: 1px; color: #1a1a1a; }
   .title-bar p { font-size: 12px; color: #888; margin-top: 2px; }
+
+  .distance-bar {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 20px;
+    z-index: 1000;
+    font-size: 13px;
+    color: #333;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    display: none;
+    text-align: center;
+    max-width: 90vw;
+  }
+  .distance-bar .close-btn {
+    display: inline-block;
+    margin-left: 12px;
+    color: #999;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .distance-bar .close-btn:hover { color: #333; }
+  .distance-bar .label { font-weight: 600; color: #2979ff; }
 </style>
 </head>
 <body>
 
 <div class="title-bar">
   <h1>上海 4泊5日</h1>
-  <p>상하이 여행 지도 — 숙소 & 주요 목적지</p>
+  <p>상하이 여행 지도 — 핀 두 개를 순서대로 클릭하면 거리 표시</p>
 </div>
+
+<div id="distance-bar" class="distance-bar"></div>
 
 <div id="map"></div>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#ff6b6b"></div>숙소</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#ffd93d"></div>관광지</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#64b5f6"></div>이차원</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#e53935"></div>숙소</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f9a825"></div>관광지</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7c4dff"></div>덕질</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -96,7 +129,7 @@ const locations = [
     lat: 31.2362,
     lng: 121.4755,
     type: "hotel",
-    color: "#ff6b6b",
+    color: "#e53935",
     desc: "숙소. 九江路(주장루) 505号, 南京东路 보행가 바로 옆.",
     distance: ""
   },
@@ -107,7 +140,7 @@ const locations = [
     lat: 31.23575,
     lng: 121.47972,
     type: "sight",
-    color: "#ffd93d",
+    color: "#f9a825",
     desc: "상하이 대표 보행자 거리. 숙소에서 도보 5분.",
     distance: "숙소에서 ~400m"
   },
@@ -118,7 +151,7 @@ const locations = [
     lat: 31.2403,
     lng: 121.4906,
     type: "sight",
-    color: "#ffd93d",
+    color: "#f9a825",
     desc: "浦东(푸동) 스카이라인 야경 명소. 밤에 갈 것.",
     distance: "숙소에서 ~1.5km"
   },
@@ -129,7 +162,7 @@ const locations = [
     lat: 31.2195,
     lng: 121.4728,
     type: "sight",
-    color: "#ffd93d",
+    color: "#f9a825",
     desc: "石库门(스쿠먼) 건축 보존 지구. 카페, 바, 레스토랑 밀집.",
     distance: "숙소에서 ~2km"
   },
@@ -140,7 +173,7 @@ const locations = [
     lat: 31.2272,
     lng: 121.4921,
     type: "sight",
-    color: "#ffd93d",
+    color: "#f9a825",
     desc: "명대 정원. 城隍庙(청황묘) 먹거리 골목 포함.",
     distance: "숙소에서 ~2km"
   },
@@ -151,7 +184,7 @@ const locations = [
     lat: 31.2370,
     lng: 121.4790,
     type: "otaku",
-    color: "#64b5f6",
+    color: "#7c4dff",
     desc: "6층 이차원 전문 상가. animate, ANIPLEX, 万代魂 등 50+ 브랜드. 상하이의 아키하바라.",
     distance: "숙소에서 ~300m"
   },
@@ -162,35 +195,131 @@ const locations = [
     lat: 31.2236,
     lng: 121.4468,
     type: "sight",
-    color: "#ffd93d",
+    color: "#f9a825",
     desc: "천년 역사 불교 사찰. 시내 한복판의 화려한 금색 건축. 입장료 50위안(~1만원), 약 1시간 소요.",
     distance: "숙소에서 ~3km (지하철 2호선 직통)"
+  },
+  {
+    name: "Tianzifang",
+    nameCn: "田子坊",
+    nameKo: "톈쯔팡",
+    lat: 31.2105,
+    lng: 121.4734,
+    type: "sight",
+    color: "#f9a825",
+    desc: "좁은 골목 사이 카페, 공방, 기념품 상점 밀집. 상하이 소품 쇼핑 명소.",
+    distance: "숙소에서 ~3km"
+  },
+  {
+    name: "Wukang Road",
+    nameCn: "武康路",
+    nameKo: "우캉루",
+    lat: 31.2130,
+    lng: 121.4400,
+    type: "sight",
+    color: "#f9a825",
+    desc: "프랑스 조계지 분위기. 플라타너스 가로수길, 武康大厦(우캉빌딩) 인증샷 명소.",
+    distance: "숙소에서 ~4km"
+  },
+  {
+    name: "Oriental Pearl Tower",
+    nameCn: "东方明珠",
+    nameKo: "동방명주",
+    lat: 31.2397,
+    lng: 121.4998,
+    type: "sight",
+    color: "#f9a825",
+    desc: "상하이 대표 랜드마크 타워. 전망대 + 역사 전시. 와이탄에서 강 건너편.",
+    distance: "숙소에서 ~2.5km"
+  },
+  {
+    name: "Shanghai Tower",
+    nameCn: "上海中心大厦",
+    nameKo: "상하이타워",
+    lat: 31.2356,
+    lng: 121.5015,
+    type: "sight",
+    color: "#f9a825",
+    desc: "632m, 중국 최고층. 118층 전망대에서 상하이 전경 조망. 입장료 약 180위안(~3.6만원).",
+    distance: "숙소에서 ~2.7km"
+  },
+  {
+    name: "Zhangyuan",
+    nameCn: "张园",
+    nameKo: "장위엔",
+    lat: 31.2310,
+    lng: 121.4590,
+    type: "sight",
+    color: "#f9a825",
+    desc: "리노베이션된 石库门 건축군. 고급 브랜드 + 전시 공간. 무료 입장, 사진 스팟.",
+    distance: "숙소에서 ~1.5km"
   }
 ];
 
-// Dark tile layer
+// Light tile layer
 const map = L.map('map', {
   zoomControl: false
-}).setView([31.2320, 121.4820], 15);
+}).setView([31.2280, 121.4750], 14);
 
 L.control.zoom({ position: 'topright' }).addTo(map);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
   subdomains: 'abcd',
   maxZoom: 19
 }).addTo(map);
 
+// Distance measurement state
+let selected = [];
+let distanceLine = null;
+const distanceBar = document.getElementById('distance-bar');
+
+function haversine(lat1, lon1, lat2, lon2) {
+  const R = 6371000;
+  const toRad = x => x * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function clearDistance() {
+  selected = [];
+  if (distanceLine) { map.removeLayer(distanceLine); distanceLine = null; }
+  distanceBar.style.display = 'none';
+}
+
+function showDistance() {
+  const a = selected[0], b = selected[1];
+  const meters = haversine(a.lat, a.lng, b.lat, b.lng);
+  const km = (meters / 1000).toFixed(1);
+  const walkMin = Math.round(meters / 80); // ~80m/min walking
+
+  if (distanceLine) map.removeLayer(distanceLine);
+  distanceLine = L.polyline([[a.lat, a.lng], [b.lat, b.lng]], {
+    color: '#2979ff', weight: 3, dashArray: '8, 6', opacity: 0.8
+  }).addTo(map);
+
+  distanceBar.innerHTML = `
+    <span class="label">${a.nameKo}</span> → <span class="label">${b.nameKo}</span>
+    &nbsp; 직선 ${km}km · 도보 약 ${walkMin}분
+    <span class="close-btn" onclick="clearDistance()">✕</span>
+  `;
+  distanceBar.style.display = 'block';
+  selected = [];
+}
+
 // Custom circle markers
+const markers = [];
 locations.forEach(loc => {
   const radius = loc.type === 'hotel' ? 12 : 9;
   const marker = L.circleMarker([loc.lat, loc.lng], {
     radius: radius,
     fillColor: loc.color,
     color: '#fff',
-    weight: 2,
-    opacity: 0.9,
-    fillOpacity: 0.85
+    weight: 2.5,
+    opacity: 1,
+    fillOpacity: 0.9
   }).addTo(map);
 
   const popup = `
@@ -201,20 +330,27 @@ locations.forEach(loc => {
   `;
   marker.bindPopup(popup, { className: 'custom-popup', maxWidth: 280 });
 
+  marker.on('click', function() {
+    selected.push(loc);
+    if (selected.length === 2) showDistance();
+  });
+
   // Label
   const label = L.divIcon({
     className: 'marker-label',
     html: `<span style="
-      color: ${loc.color};
-      font-size: 12px;
+      color: #333;
+      font-size: 11px;
       font-weight: 600;
-      text-shadow: 0 0 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.6);
+      text-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 9px #fff;
       white-space: nowrap;
     ">${loc.nameKo}</span>`,
     iconSize: [0, 0],
     iconAnchor: [-14, 4]
   });
   L.marker([loc.lat, loc.lng], { icon: label, interactive: false }).addTo(map);
+
+  markers.push(marker);
 });
 
 // Fit bounds with padding
