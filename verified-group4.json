@@ -1,0 +1,298 @@
+[
+  {
+    "id": 17,
+    "cn": "上海静安大悦城",
+    "addr": "西藏北路166号 上海",
+    "current": {
+      "lat": 31.2466,
+      "lng": 121.4675
+    },
+    "sources": {
+      "photon_name": [],
+      "photon_addr": [],
+      "nominatim": [
+        {
+          "lat": 31.2496,
+          "lng": 121.44753,
+          "name": "上海火车站, 恒丰路, 上海市, 卓悦局, 200061, 中国",
+          "type": "bus_stop"
+        }
+      ],
+      "tavily": {
+        "answer": "上海静安大悦城位于西藏北路166号，其GPS坐标为31.2214度纬线，121.4593度经线。",
+        "results": [
+          {
+            "title": "电话,简介(上海市静安区西藏北路166号)-百度地图",
+            "url": "https://j.map.baidu.com/e2/MSIu"
+          },
+          {
+            "title": "Driving directions to 上海大悅城, 西藏北路, 166 - Waze",
+            "url": "https://www.waze.com/zh-HK/live-map/directions/cn/%E4%B8%8A%E6%B5%B7%E5%B8%82/%E4%B8%8A%E6%B5%B7%E5%A4%A7%E6%82%85%E5%9F%8E?to=place.ChIJQ9irLkZwsjUR6uPLmdehBuM"
+          },
+          {
+            "title": "上海靜安大悅城- 維基百科，自由的百科全書",
+            "url": "https://zh.wikipedia.org/zh-tw/%E4%B8%8A%E6%B5%B7%E5%A4%A7%E6%82%A6%E5%9F%8E?oldformat=true"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "MISMATCH",
+      "lat": 31.2496,
+      "lng": 121.44753,
+      "agreement": 1,
+      "total_candidates": 1,
+      "distance_from_current_m": 1928,
+      "sources_agreed": [
+        "nominatim"
+      ]
+    },
+    "candidates": [
+      {
+        "source": "nominatim",
+        "lat": 31.2496,
+        "lng": 121.44753,
+        "name": "上海火车站, 恒丰路, 上海市, 卓悦局, 200061, 中国"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "cn": "美罗城",
+    "addr": "肇嘉浜路1111号 上海",
+    "current": {
+      "lat": 31.1949,
+      "lng": 121.4356
+    },
+    "sources": {
+      "photon_name": [
+        {
+          "lat": 31.19492,
+          "lng": 121.43556,
+          "name": "Metro City",
+          "street": "Zhaojiabang Road",
+          "city": "",
+          "type": "mall"
+        }
+      ],
+      "photon_addr": [],
+      "nominatim": [
+        {
+          "lat": 31.19492,
+          "lng": 121.43556,
+          "name": "美罗城, 肇嘉浜路, 徐家汇, 上海市, 200030, 中国",
+          "type": "mall"
+        }
+      ],
+      "tavily": {
+        "answer": "美罗城位于上海市徐汇区肇嘉浜路1111号，其GPS坐标为31.198943度纬度，121.445316度经度。",
+        "results": [
+          {
+            "title": "美罗城- 上海市徐汇区| 地址营业时间| 高德地图 - Amap",
+            "url": "https://ditu.amap.com/place/B00154DTEG"
+          },
+          {
+            "title": "百度地图",
+            "url": "https://api.map.baidu.com/marker?location=31.198943,121.445316&title=%E4%B8%8A%E6%B5%B7%E5%B8%82%E4%B8%8A%E6%B5%B7%E5%BE%90%E6%B1%87%E8%82%87%E5%98%89%E6%B5%9C%E8%B7%AF1111%E5%8F%B7%E7%BE%8E%E7%BD%97%E5%9F%8EB%E5%8C%BA1%E5%B1%8217&content=%E4%B8%8A%E6%B5%B7%E5%B8%82%E4%B8%8A%E6%B5%B7%E5%BE%90%E6%B1%87%E8%82%87%E5%98%89%E6%B5%9C%E8%B7%AF1111%E5%8F%B7%E7%BE%8E%E7%BD%97%E5%9F%8EB%E5%8C%BA1%E5%B1%8217&output=html"
+          },
+          {
+            "title": "上海市徐汇区肇嘉浜路1111号美罗城b1 - 百度地图",
+            "url": "https://map.baidu.com/mobile/webapp/search/search/qt=s&wd=%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%BE%90%E6%B1%87%E5%8C%BA%E8%82%87%E5%98%89%E6%B5%9C%E8%B7%AF1111%E5%8F%B7%E7%BE%8E%E7%BD%97%E5%9F%8EB1%20&c=289&pn=0&device_ratio=2&da_src=shareurl&&vt=map"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "OK",
+      "lat": 31.19492,
+      "lng": 121.43556,
+      "agreement": 2,
+      "total_candidates": 2,
+      "distance_from_current_m": 4,
+      "sources_agreed": [
+        "photon_name",
+        "nominatim"
+      ]
+    },
+    "candidates": [
+      {
+        "source": "photon_name",
+        "lat": 31.19492,
+        "lng": 121.43556,
+        "name": "Metro City"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.19492,
+        "lng": 121.43556,
+        "name": "美罗城, 肇嘉浜路, 徐家汇, 上海市, 200030, 中国"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "cn": "三井购物公园LaLaport上海金桥",
+    "addr": "新金桥路738号 上海",
+    "current": {
+      "lat": 31.2583,
+      "lng": 121.6141
+    },
+    "sources": {
+      "photon_name": [],
+      "photon_addr": [],
+      "nominatim": [],
+      "tavily": {
+        "answer": "三井购物公园LaLaport上海位于上海市浦东新区新金桥路738号，其GPS坐标为31.258255度纬线，121.614059度经线。",
+        "results": [
+          {
+            "title": "上海市浦东上海市浦东Lalaport（浦东新区新金桥路738号） - 百度地图",
+            "url": "https://api.map.baidu.com/marker?location=31.258255,121.614059&title=%E4%B8%8A%E6%B5%B7%E5%B8%82%E6%B5%A6%E4%B8%9C%E4%B8%8A%E6%B5%B7%E5%B8%82%E6%B5%A6%E4%B8%9CLalaport%EF%BC%88%E6%B5%A6%E4%B8%9C%E6%96%B0%E5%8C%BA%E6%96%B0%E9%87%91%E6%A1%A5%E8%B7%AF738%E5%8F%B7%EF%BC%89&content=%E4%B8%8A%E6%B5%B7%E5%B8%82%E6%B5%A6%E4%B8%9C%E4%B8%8A%E6%B5%B7%E5%B8%82%E6%B5%A6%E4%B8%9CLalaport%EF%BC%88%E6%B5%A6%E4%B8%9C%E6%96%B0%E5%8C%BA%E6%96%B0%E9%87%91%E6%A1%A5%E8%B7%AF738%E5%8F%B7%EF%BC%89&output=html"
+          },
+          {
+            "title": "LaLaport(金桥店) - 百度地图",
+            "url": "https://map.baidu.com/search//@13537737.20,3643992.69,20z?querytype=s&da_src=shareurl&wd=%E4%B8%8A%E6%B5%B7%E5%B8%82%E6%B5%A6%E4%B8%9C%E6%96%B0%E5%8C%BA%E6%96%B0%E9%87%91%E6%A1%A5%E8%B7%AF738%E5%8F%B7%20LaLaport(%E9%87%91%E6%A1%A5%E5%BA%97)&c=128&src=0&pn=0&sug=0&l=15&from=webmap&biz_forward=%7B%22scaler%22:1,%22styles%22:%22pl%22%7D&device_ratio=1"
+          },
+          {
+            "title": "LaLaport |三井购物公园",
+            "url": "https://mitsui-shopping-park.com/cn/lalaport/"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "NO_DATA",
+      "lat": 31.2583,
+      "lng": 121.6141
+    },
+    "candidates": []
+  },
+  {
+    "id": 20,
+    "cn": "莉莲蛋挞",
+    "addr": "南京西路2-68号 新世界城B1 上海",
+    "current": {
+      "lat": 31.2367,
+      "lng": 121.469
+    },
+    "sources": {
+      "photon_name": [
+        {
+          "lat": 31.23466,
+          "lng": 121.46977,
+          "name": "Lilian Bakery",
+          "street": "Jiujiang Road",
+          "city": "Shanghai",
+          "type": "bakery"
+        },
+        {
+          "lat": 31.23668,
+          "lng": 121.46902,
+          "name": "Lillian Bakery",
+          "street": "West Nanjing Road",
+          "city": "Shanghai",
+          "type": "bakery"
+        }
+      ],
+      "photon_addr": [
+        {
+          "lat": 31.23655,
+          "lng": 121.4689,
+          "name": "点有好味(新世界城店)",
+          "street": "West Nanjing Road",
+          "city": "Shanghai",
+          "type": "restaurant"
+        },
+        {
+          "lat": 31.23678,
+          "lng": 121.46931,
+          "name": "陶陶居酒家(新世界城店)",
+          "street": "West Nanjing Road",
+          "city": "Shanghai",
+          "type": "restaurant"
+        }
+      ],
+      "nominatim": [
+        {
+          "lat": 31.23466,
+          "lng": 121.46977,
+          "name": "莉莲蛋挞, 九江路, 黄浦区, 上海市, 200001, 中国",
+          "type": "bakery"
+        },
+        {
+          "lat": 31.23668,
+          "lng": 121.46902,
+          "name": "莉莲蛋挞, 南京西路, 黄浦区, 上海市, 200001, 中国",
+          "type": "bakery"
+        }
+      ],
+      "tavily": {
+        "answer": "莉莲蛋挞位于上海市黄浦区南京西路2-68号新世界城B1层，GPS坐标为31.2212度纬线，121.4615度经线。",
+        "results": [
+          {
+            "title": "【莉莲蛋挞(新世界城店)】地址,电话,路线,周边设施 - 360地图",
+            "url": "https://m.map.360.cn/m/search/detail/pid=6054b762e4a2be19"
+          },
+          {
+            "title": "上海餐饮美食- 莉莲蛋挞饼屋(新世界城店) - 城市吧",
+            "url": "https://m.city8.com/sh/cater/8daad57955okb03414"
+          },
+          {
+            "title": "莉莲蛋挞(新世界B1店)_电话_地址|在哪里|地图 - 上海本地宝",
+            "url": "http://sh.bendibao.com/wangdian/dian/4904278.shtm"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "OK",
+      "lat": 31.23667,
+      "lng": 121.46906,
+      "agreement": 4,
+      "total_candidates": 6,
+      "distance_from_current_m": 7,
+      "sources_agreed": [
+        "photon_addr",
+        "photon_name",
+        "nominatim"
+      ]
+    },
+    "candidates": [
+      {
+        "source": "photon_name",
+        "lat": 31.23466,
+        "lng": 121.46977,
+        "name": "Lilian Bakery"
+      },
+      {
+        "source": "photon_name",
+        "lat": 31.23668,
+        "lng": 121.46902,
+        "name": "Lillian Bakery"
+      },
+      {
+        "source": "photon_addr",
+        "lat": 31.23655,
+        "lng": 121.4689,
+        "name": "点有好味(新世界城店)"
+      },
+      {
+        "source": "photon_addr",
+        "lat": 31.23678,
+        "lng": 121.46931,
+        "name": "陶陶居酒家(新世界城店)"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.23466,
+        "lng": 121.46977,
+        "name": "莉莲蛋挞, 九江路, 黄浦区, 上海市, 200001, 中国"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.23668,
+        "lng": 121.46902,
+        "name": "莉莲蛋挞, 南京西路, 黄浦区, 上海市, 200001, 中国"
+      }
+    ]
+  }
+]

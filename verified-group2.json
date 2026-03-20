@@ -1,0 +1,366 @@
+[
+  {
+    "id": 9,
+    "cn": "武康大楼",
+    "addr": "武康路 上海",
+    "current": {
+      "lat": 31.2063,
+      "lng": 121.4337
+    },
+    "sources": {
+      "photon_name": [
+        {
+          "lat": 31.20626,
+          "lng": 121.43373,
+          "name": "Wukang Mansion",
+          "street": "Middle Huaihai Road",
+          "city": "",
+          "type": "yes"
+        }
+      ],
+      "photon_addr": [
+        {
+          "lat": 31.21141,
+          "lng": 121.43609,
+          "name": "Wukang Road",
+          "street": "",
+          "city": "",
+          "type": "residential"
+        },
+        {
+          "lat": 31.20908,
+          "lng": 121.43385,
+          "name": "武康路280弄",
+          "street": "",
+          "city": "",
+          "type": "residential"
+        }
+      ],
+      "nominatim": [
+        {
+          "lat": 31.20626,
+          "lng": 121.43373,
+          "name": "武康大楼, 1850, 淮海中路, 曹家堰, 上海市, 200030, 中国",
+          "type": "yes"
+        }
+      ],
+      "tavily": {
+        "answer": "武康大楼位于上海市徐匯区淮海中路1842-1858号，其GPS坐标为北纬31.2306度，东经121.4737度。",
+        "results": [
+          {
+            "title": "武康大樓- 維基百科，自由的百科全書",
+            "url": "https://zh.wikipedia.org/wiki/%E6%AD%A6%E5%BA%B7%E5%A4%A7%E6%A5%BC"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "OK",
+      "lat": 31.20626,
+      "lng": 121.43373,
+      "agreement": 2,
+      "total_candidates": 4,
+      "distance_from_current_m": 5,
+      "sources_agreed": [
+        "nominatim",
+        "photon_name"
+      ]
+    },
+    "candidates": [
+      {
+        "source": "photon_name",
+        "lat": 31.20626,
+        "lng": 121.43373,
+        "name": "Wukang Mansion"
+      },
+      {
+        "source": "photon_addr",
+        "lat": 31.21141,
+        "lng": 121.43609,
+        "name": "Wukang Road"
+      },
+      {
+        "source": "photon_addr",
+        "lat": 31.20908,
+        "lng": 121.43385,
+        "name": "武康路280弄"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.20626,
+        "lng": 121.43373,
+        "name": "武康大楼, 1850, 淮海中路, 曹家堰, 上海市, 200030, 中国"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "cn": "东方明珠广播电视塔",
+    "addr": "世纪大道1号 上海",
+    "current": {
+      "lat": 31.2415,
+      "lng": 121.4967
+    },
+    "sources": {
+      "photon_name": [
+        {
+          "lat": 31.24153,
+          "lng": 121.49673,
+          "name": "东方明珠广播电视塔",
+          "street": "Lujiazui Ring Road",
+          "city": "",
+          "type": "bus_stop"
+        }
+      ],
+      "photon_addr": [
+        {
+          "lat": 31.23754,
+          "lng": 121.50623,
+          "name": "Pudong International Information Port",
+          "street": "Century Avenue",
+          "city": "上海市",
+          "type": "commercial"
+        },
+        {
+          "lat": 31.23696,
+          "lng": 121.50397,
+          "name": "KFC",
+          "street": "Century Avenue",
+          "city": "上海市",
+          "type": "fast_food"
+        }
+      ],
+      "nominatim": [
+        {
+          "lat": 31.24195,
+          "lng": 121.49526,
+          "name": "东方明珠电视塔, 1, 世纪大道, 浦东新区, 陆家嘴, 200002, 中国",
+          "type": "yes"
+        },
+        {
+          "lat": 31.24153,
+          "lng": 121.49673,
+          "name": "东方明珠广播电视塔, 陆家嘴环路, 浦东新区, 陆家嘴, 200002, 中国",
+          "type": "bus_stop"
+        }
+      ],
+      "tavily": {
+        "answer": "东方明珠广播电视塔坐落于上海浦东新区世纪大道1号，其GPS坐标为北纬31°14'31\"，东经121°29'43\"。",
+        "results": [
+          {
+            "title": "东方明珠电视塔：上海浦东新区地标性建筑",
+            "url": "https://www.bchrt.com/place/Oriental-Pearl-TV-Tower-Pudong-Xinqu-Shanghai-Shi-China-1905.html"
+          },
+          {
+            "title": "東方明珠廣播電視塔",
+            "url": "https://zh.wikipedia.org/zh-tw/%E6%9D%B1%E6%96%B9%E6%98%8E%E7%8F%A0%E5%A1%94?oldformat=true"
+          },
+          {
+            "title": "东方明珠广播电视塔",
+            "url": "https://baike.baidu.com/item/%E4%B8%9C%E6%96%B9%E6%98%8E%E7%8F%A0%E5%B9%BF%E6%92%AD%E7%94%B5%E8%A7%86%E5%A1%94?noadapt=1&fromtitle=%E4%B8%8A%E6%B5%B7%E4%B8%9C%E6%96%B9%E6%98%8E%E7%8F%A0%E5%B9%BF%E6%92%AD%E7%94%B5%E8%A7%86%E5%A1%94&fromid=6769479"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "OK",
+      "lat": 31.24167,
+      "lng": 121.49624,
+      "agreement": 3,
+      "total_candidates": 5,
+      "distance_from_current_m": 48,
+      "sources_agreed": [
+        "nominatim",
+        "photon_name"
+      ]
+    },
+    "candidates": [
+      {
+        "source": "photon_name",
+        "lat": 31.24153,
+        "lng": 121.49673,
+        "name": "东方明珠广播电视塔"
+      },
+      {
+        "source": "photon_addr",
+        "lat": 31.23754,
+        "lng": 121.50623,
+        "name": "Pudong International Information Port"
+      },
+      {
+        "source": "photon_addr",
+        "lat": 31.23696,
+        "lng": 121.50397,
+        "name": "KFC"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.24195,
+        "lng": 121.49526,
+        "name": "东方明珠电视塔, 1, 世纪大道, 浦东新区, 陆家嘴, 200002, 中国"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.24153,
+        "lng": 121.49673,
+        "name": "东方明珠广播电视塔, 陆家嘴环路, 浦东新区, 陆家嘴, 200002, 中国"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "cn": "上海中心大厦",
+    "addr": "银城中路501号 上海",
+    "current": {
+      "lat": 31.2356,
+      "lng": 121.5013
+    },
+    "sources": {
+      "photon_name": [
+        {
+          "lat": 31.23546,
+          "lng": 121.50044,
+          "name": "Shanghai Tower",
+          "street": "Middle Yincheng Road",
+          "city": "",
+          "type": "attraction"
+        },
+        {
+          "lat": 31.23564,
+          "lng": 121.50125,
+          "name": "Shanghai Tower",
+          "street": "Middle Yincheng Road",
+          "city": "上海市",
+          "type": "commercial"
+        }
+      ],
+      "photon_addr": [],
+      "nominatim": [
+        {
+          "lat": 31.23564,
+          "lng": 121.50125,
+          "name": "上海中心大厦, 501, 银城中路, 浦东新区, 陆家嘴, 200010, 中国",
+          "type": "commercial"
+        },
+        {
+          "lat": 31.23546,
+          "lng": 121.50044,
+          "name": "上海中心大厦, 银城中路, 浦东新区, 陆家嘴, 200010, 中国",
+          "type": "attraction"
+        }
+      ],
+      "tavily": {
+        "answer": "上海中心大厦位于上海市浦东新区银城中路501号，其GPS坐标为31.239185度纬线，121.511999度经线。",
+        "results": [
+          {
+            "title": "上海市上海浦东浦东新区银城中路501号上海中心大厦B2 - 百度地图",
+            "url": "https://api.map.baidu.com/marker?location=31.239185,121.511999&title=%E4%B8%8A%E6%B5%B7%E5%B8%82%E4%B8%8A%E6%B5%B7%E6%B5%A6%E4%B8%9C%E6%B5%A6%E4%B8%9C%E6%96%B0%E5%8C%BA%E9%93%B6%E5%9F%8E%E4%B8%AD%E8%B7%AF501%E5%8F%B7%E4%B8%8A%E6%B5%B7%E4%B8%AD%E5%BF%83%E5%A4%A7%E5%8E%A6B2&content=%E4%B8%8A%E6%B5%B7%E5%B8%82%E4%B8%8A%E6%B5%B7%E6%B5%A6%E4%B8%9C%E6%B5%A6%E4%B8%9C%E6%96%B0%E5%8C%BA%E9%93%B6%E5%9F%8E%E4%B8%AD%E8%B7%AF501%E5%8F%B7%E4%B8%8A%E6%B5%B7%E4%B8%AD%E5%BF%83%E5%A4%A7%E5%8E%A6B2&output=html"
+          },
+          {
+            "title": "上海浦东陆家嘴银城中路501号上海中心大厦 - 百度地图",
+            "url": "http://map.baidu.com/?l=&s=s%26wd%3D%E4%B8%8A%E6%B5%B7%E6%B5%A6%E4%B8%9C%E9%99%86%E5%AE%B6%E5%98%B4%E9%93%B6%E5%9F%8E%E4%B8%AD%E8%B7%AF501%E5%8F%B7%E4%B8%8A%E6%B5%B7%E4%B8%AD%E5%BF%83%E5%A4%A7%E5%8E%A6"
+          },
+          {
+            "title": "银城中路501号",
+            "url": "https://www.biwuke.com/loupan/loupannei/1275.html"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "OK",
+      "lat": 31.23555,
+      "lng": 121.50084,
+      "agreement": 4,
+      "total_candidates": 4,
+      "distance_from_current_m": 44,
+      "sources_agreed": [
+        "nominatim",
+        "photon_name"
+      ]
+    },
+    "candidates": [
+      {
+        "source": "photon_name",
+        "lat": 31.23546,
+        "lng": 121.50044,
+        "name": "Shanghai Tower"
+      },
+      {
+        "source": "photon_name",
+        "lat": 31.23564,
+        "lng": 121.50125,
+        "name": "Shanghai Tower"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.23564,
+        "lng": 121.50125,
+        "name": "上海中心大厦, 501, 银城中路, 浦东新区, 陆家嘴, 200010, 中国"
+      },
+      {
+        "source": "nominatim",
+        "lat": 31.23546,
+        "lng": 121.50044,
+        "name": "上海中心大厦, 银城中路, 浦东新区, 陆家嘴, 200010, 中国"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "cn": "张园",
+    "addr": "茂名北路188弄 上海",
+    "current": {
+      "lat": 31.2284,
+      "lng": 121.4557
+    },
+    "sources": {
+      "photon_name": [],
+      "photon_addr": [],
+      "nominatim": [
+        {
+          "lat": 31.23127,
+          "lng": 121.47002,
+          "name": "上海市, 均乐社区, 上海市, 中国",
+          "type": "administrative"
+        }
+      ],
+      "tavily": {
+        "answer": "张园位于上海静安区茂名北路188弄，其GPS坐标为31.234154纬度，121.466246经度。",
+        "results": [
+          {
+            "title": "百度地图",
+            "url": "https://api.map.baidu.com/marker?location=31.234154,121.466246&title=%E4%B8%8A%E6%B5%B7%E5%B8%82%E4%B8%8A%E6%B5%B7%E9%9D%99%E5%AE%89%E4%B8%8A%E6%B5%B7%E5%B8%82%E9%9D%99%E5%AE%89%E5%8C%BA%E8%8C%82%E5%90%8D%E5%8C%97%E8%B7%AF188%E5%BC%84%E5%BC%A0%E5%9B%AD&content=%E4%B8%8A%E6%B5%B7%E5%B8%82%E4%B8%8A%E6%B5%B7%E9%9D%99%E5%AE%89%E4%B8%8A%E6%B5%B7%E5%B8%82%E9%9D%99%E5%AE%89%E5%8C%BA%E8%8C%82%E5%90%8D%E5%8C%97%E8%B7%AF188%E5%BC%84%E5%BC%A0%E5%9B%AD&output=html"
+          },
+          {
+            "title": "2023年兔年中國要到何處? - 遙望山的網誌 - udn部落格",
+            "url": "https://blog.udn.com/flytsau/178247305"
+          },
+          {
+            "title": "ngram.txt - Hugging Face",
+            "url": "https://huggingface.co/IDEA-CCNL/Erlangshen-ZEN2-668M-Chinese/resolve/main/ngram.txt?download=true"
+          }
+        ]
+      }
+    },
+    "verdict": {
+      "status": "MISMATCH",
+      "lat": 31.23127,
+      "lng": 121.47002,
+      "agreement": 1,
+      "total_candidates": 1,
+      "distance_from_current_m": 1398,
+      "sources_agreed": [
+        "nominatim"
+      ]
+    },
+    "candidates": [
+      {
+        "source": "nominatim",
+        "lat": 31.23127,
+        "lng": 121.47002,
+        "name": "上海市, 均乐社区, 上海市, 中国"
+      }
+    ]
+  }
+]
