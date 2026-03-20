@@ -31,7 +31,7 @@
   .distance-bar .stats small{font-size:14px;font-weight:500;opacity:.85;margin-left:6px}
   .distance-bar .close-btn{position:absolute;top:10px;right:14px;color:rgba(255,255,255,.7);cursor:pointer;font-size:20px;line-height:1}
   .distance-bar .close-btn:hover{color:#fff}
-  .pin-label{font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;color:#333;background:rgba(255,255,255,.92);padding:2px 8px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.1);white-space:nowrap;pointer-events:none;border:1px solid rgba(0,0,0,.06);line-height:1.5}
+  .pin-label{font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;color:#333;background:rgba(255,255,255,.92);padding:1px 6px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.1);white-space:nowrap;pointer-events:none;border:1px solid rgba(0,0,0,.06);line-height:1.4}
   .pin-label-hotel{background:rgba(229,57,53,.12);color:#c62828;border-color:rgba(229,57,53,.2)}
   .pin-label-otaku{background:rgba(124,77,255,.1);color:#5e35b1;border-color:rgba(124,77,255,.15)}
   .pin-label-food{background:rgba(255,112,67,.1);color:#d84315;border-color:rgba(255,112,67,.15)}
@@ -54,67 +54,74 @@
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// === COORDINATES VERIFIED 2026-03-20 via Nominatim + Google Maps ===
+/*
+  COORDINATES VERIFIED 2026-03-20
+  Sources: OSM Overpass API (way/node), Google Maps user links, Nominatim
+  Google Maps links: name-based search (not coordinate-based)
+*/
 const HOTEL={lat:31.2371,lng:121.4770};
 const NEARBY_DIST=0.006;
 
 const locations=[
-  // 숙소
+  // === 숙소 ===
   {nameKo:"그랜드 센트럴 호텔",nameCn:"上海大酒店",lat:31.2371,lng:121.4770,type:"hotel",color:"#e53935",
-   desc:"숙소. 九江路 505号.",distance:""},
-  // 관광지 — coords verified
-  {nameKo:"난징동루 보행가",nameCn:"南京东路步行街",lat:31.2358,lng:121.4797,type:"sight",color:"#f9a825",
-   desc:"상하이 대표 보행자 거리.",distance:"숙소에서 ~400m"},
+   gq:"上海大酒店+九江路505号",desc:"숙소. 九江路 505号.",distance:""},
+
+  // === 관광지 — OSM verified ===
+  {nameKo:"난징루 보행가",nameCn:"南京路步行街",lat:31.2381,lng:121.4752,type:"sight",color:"#f9a825",
+   gq:"南京路步行街+上海",desc:"상하이 대표 보행자 거리.",distance:"숙소에서 ~400m"},
   {nameKo:"난징시루",nameCn:"南京西路",lat:31.2305,lng:121.4580,type:"sight",color:"#f9a825",
-   desc:"고급 브랜드 + 쇼핑 거리. 정안사·장위엔 라인.",distance:"숙소에서 ~2km"},
+   gq:"南京西路+上海",desc:"고급 브랜드 + 쇼핑 거리.",distance:"숙소에서 ~2km"},
   {nameKo:"와이탄",nameCn:"外滩",lat:31.2403,lng:121.4906,type:"sight",color:"#f9a825",
-   desc:"浦东 스카이라인 야경. 밤에 갈 것.",distance:"숙소에서 ~1.5km"},
-  {nameKo:"신천지",nameCn:"新天地",lat:31.2193,lng:121.4676,type:"sight",color:"#f9a825",
-   desc:"石库门 건축 보존 지구. 카페, 바, 레스토랑.",distance:"숙소에서 ~2km"},
-  {nameKo:"예원",nameCn:"豫园",lat:31.2272,lng:121.4921,type:"sight",color:"#f9a825",
-   desc:"명대 정원. 城隍庙 먹거리 골목.",distance:"숙소에서 ~2km"},
-  {nameKo:"정안사",nameCn:"静安寺",lat:31.2252,lng:121.4408,type:"sight",color:"#f9a825",
-   desc:"천년 불교 사찰. 입장료 50위안. 약 1시간.",distance:"숙소에서 ~3km (2호선)"},
-  {nameKo:"톈쯔팡",nameCn:"田子坊",lat:31.2103,lng:121.4641,type:"sight",color:"#f9a825",
-   desc:"골목 카페, 공방, 기념품.",distance:"숙소에서 ~3km"},
-  {nameKo:"우캉루",nameCn:"武康路",lat:31.2139,lng:121.4362,type:"sight",color:"#f9a825",
-   desc:"프랑스 조계지. 武康大厦 인증샷.",distance:"숙소에서 ~4km"},
-  {nameKo:"동방명주",nameCn:"东方明珠",lat:31.2419,lng:121.4953,type:"sight",color:"#f9a825",
-   desc:"상하이 랜드마크 타워. 전망대.",distance:"숙소에서 ~2km"},
-  {nameKo:"상하이타워",nameCn:"上海中心大厦",lat:31.2356,lng:121.5012,type:"sight",color:"#f9a825",
-   desc:"632m 중국 최고층. 118층 전망대. 180위안.",distance:"숙소에서 ~2.5km"},
+   gq:"外滩+上海",desc:"浦东 스카이라인 야경. 밤에 갈 것.",distance:"숙소에서 ~1.5km"},
+  {nameKo:"신천지",nameCn:"新天地",lat:31.2219,lng:121.4705,type:"sight",color:"#f9a825",
+   gq:"新天地+上海",desc:"石库门 건축 보존 지구. 카페, 바, 레스토랑.",distance:"숙소에서 ~2km"},
+  {nameKo:"예원",nameCn:"豫园",lat:31.2299,lng:121.4829,type:"sight",color:"#f9a825",
+   gq:"豫园+上海",desc:"명대 정원. 城隍庙 먹거리 골목.",distance:"숙소에서 ~1.5km"},
+  {nameKo:"정안사",nameCn:"静安寺",lat:31.2254,lng:121.4407,type:"sight",color:"#f9a825",
+   gq:"静安寺+上海",desc:"천년 불교 사찰. 입장료 50위안.",distance:"숙소에서 ~3km (2호선)"},
+  {nameKo:"톈쯔팡",nameCn:"田子坊",lat:31.2102,lng:121.4641,type:"sight",color:"#f9a825",
+   gq:"田子坊+上海",desc:"골목 카페, 공방, 기념품.",distance:"숙소에서 ~3km"},
+  {nameKo:"우캉루",nameCn:"武康大楼",lat:31.2063,lng:121.4337,type:"sight",color:"#f9a825",
+   gq:"武康大楼+上海",desc:"프랑스 조계지. 武康大厦 인증샷.",distance:"숙소에서 ~4.5km"},
+  {nameKo:"동방명주",nameCn:"东方明珠塔",lat:31.2415,lng:121.4957,type:"sight",color:"#f9a825",
+   gq:"东方明珠塔+上海",desc:"상하이 랜드마크 타워. 전망대.",distance:"숙소에서 ~2km"},
+  {nameKo:"상하이타워",nameCn:"上海中心大厦",lat:31.2356,lng:121.5013,type:"sight",color:"#f9a825",
+   gq:"上海中心大厦",desc:"632m 중국 최고층. 118층 전망대. 180위안.",distance:"숙소에서 ~2.5km"},
   {nameKo:"장위엔",nameCn:"张园",lat:31.2312,lng:121.4574,type:"sight",color:"#f9a825",
-   desc:"리노베이션 石库门. 무료 입장.",distance:"숙소에서 ~1.5km"},
+   gq:"张园+茂名北路+上海",desc:"리노베이션 石库门. 무료 입장.",distance:"숙소에서 ~1.5km"},
   {nameKo:"임시정부유적지",nameCn:"大韩民国临时政府旧址",lat:31.2192,lng:121.4702,type:"sight",color:"#f9a825",
-   desc:"马当路 306弄. 1919년 설립. 09:00-17:00.",distance:"신천지 바로 옆"},
-  // 덕질 — coords verified
-  {nameKo:"바이리엔ZX",nameCn:"百联ZX创趣场",lat:31.2392,lng:121.4788,type:"otaku",color:"#7c4dff",
-   desc:"6층 이차원 상가. 50+ 브랜드. 6F 인형뽑기. 10-22시.",distance:"숙소에서 ~300m"},
-  {nameKo:"헨더슨",nameCn:"恒基名人购物中心",lat:31.2400,lng:121.4797,type:"otaku",color:"#7c4dff",
-   desc:"南京东路역 직결. 바이리엔ZX 근처.",distance:"바이리엔ZX에서 도보 3분"},
+   gq:"大韩民国临时政府旧址+上海",desc:"马当路 306弄. 09:00-17:00.",distance:"신천지 바로 옆"},
+
+  // === 덕질 — OSM verified ===
+  {nameKo:"바이리엔ZX",nameCn:"百联ZX创趣场",lat:31.2391,lng:121.4788,type:"otaku",color:"#7c4dff",
+   gq:"百联ZX创趣场+上海",desc:"6층 이차원 상가. 50+ 브랜드. 10-22시.",distance:"숙소에서 ~300m"},
+  {nameKo:"헨더슨",nameCn:"恒基名人购物中心",lat:31.2398,lng:121.4797,type:"otaku",color:"#7c4dff",
+   gq:"恒基名人购物中心+上海",desc:"南京东路역 직결.",distance:"바이리엔ZX에서 도보 3분"},
   {nameKo:"백미향사",nameCn:"百米香榭商业街",lat:31.2342,lng:121.4738,type:"otaku",color:"#7c4dff",
-   desc:"广西北路 252号 中福城 2기.",distance:"숙소에서 ~200m"},
+   gq:"百米香榭商业街+广西北路+上海",desc:"广西北路 252号 中福城 2기.",distance:"숙소에서 ~200m"},
   {nameKo:"징안 조이시티",nameCn:"上海静安大悦城",lat:31.2466,lng:121.4675,type:"otaku",color:"#7c4dff",
-   desc:"西藏北路 166号. 이차원 + 쇼핑 복합몰.",distance:"숙소에서 ~2km"},
-  {nameKo:"메트로시티",nameCn:"美罗城",lat:31.1949,lng:121.4356,type:"otaku",color:"#7c4dff",
-   desc:"JUMP SHOP + CAFE, 지브리 샵. 徐家汇역.",distance:"숙소에서 ~6km"},
-  {nameKo:"라라포트",nameCn:"LaLaport上海金桥",lat:31.2478,lng:121.5868,type:"otaku",color:"#7c4dff",
-   desc:"新金桥路 738号, 浦东. 대형몰.",distance:"숙소에서 ~11km"},
-  // 식당 — coords verified
-  {nameKo:"릴리안 에그타르트",nameCn:"莉莲蛋挞(新世界城)",lat:31.2349,lng:121.4736,type:"food",color:"#ff7043",
-   desc:"에그타르트 명가. 新世界城 B1 + 大丸百货 B2 두 곳. 원래맛+캐러멜 추천.",distance:"숙소에서 도보 3분"},
+   gq:"静安大悦城+上海",desc:"西藏北路 166号. 이차원 + 쇼핑 복합몰.",distance:"숙소에서 ~2km"},
+  {nameKo:"메트로시티",nameCn:"美罗城",lat:31.1949,lng:121.4352,type:"otaku",color:"#7c4dff",
+   gq:"美罗城+上海+徐家汇",desc:"JUMP SHOP + CAFE, 지브리 샵. 徐家汇역.",distance:"숙소에서 ~6km"},
+  {nameKo:"라라포트",nameCn:"LaLaport上海金桥",lat:31.2523,lng:121.6081,type:"otaku",color:"#7c4dff",
+   gq:"三井购物公园LaLaport+上海金桥",desc:"新金桥路 738号, 浦东. 대형몰.",distance:"숙소에서 ~13km"},
+
+  // === 식당 ===
+  {nameKo:"릴리안 에그타르트",nameCn:"莉莲蛋挞(新世界城)",lat:31.2349037,lng:121.4736472,type:"food",color:"#ff7043",
+   gq:"莉莲蛋挞+新世界城+上海",desc:"에그타르트 명가. 新世界城 B1. 원래맛+캐러멜 추천.",distance:"숙소에서 도보 3분"},
   {nameKo:"肉串汪 양꼬치",nameCn:"肉串汪(外滩店)",lat:31.2502,lng:121.4855,type:"food",color:"#ff7043",
-   desc:"양꼬치. 吴淞路 130号. 10:30~01:30.",distance:"와이탄에서 도보 10분"},
+   gq:"肉串汪+外滩+上海",desc:"양꼬치. 吴淞路 130号. 10:30~01:30.",distance:"와이탄 근처"},
   {nameKo:"RedLips 串串香",nameCn:"红唇串串香(宏伊广场店)",lat:31.2388,lng:121.4800,type:"food",color:"#ff7043",
-   desc:"꼬치 훠궈. 南京东路 299号 宏伊广场 B1. 25위안/인. 10:00-21:30.",distance:"숙소에서 도보 5분"},
+   gq:"红唇串串香+宏伊国际广场+上海",desc:"꼬치 훠궈. 南京东路 299号 宏伊广场 B1. 25위안/인.",distance:"숙소에서 도보 5분"},
   {nameKo:"龙文 쌀국수",nameCn:"龙文桂林米粉(古北店)",lat:31.2003,lng:121.3881,type:"food",color:"#ff7043",
-   desc:"桂林米粉. 水城南路 51弄. 21위안/인. 长宁区 미분 2위.",distance:"长宁区 古北"},
+   gq:"龙文桂林米粉+古北+上海",desc:"桂林米粉. 水城南路 51弄. 21위안/인.",distance:"长宁区 古北"},
   {nameKo:"川香 마라탕",nameCn:"川香麻辣烫(九歌茗园店)",lat:31.1907,lng:121.3724,type:"food",color:"#ff7043",
-   desc:"마라탕. 闵行区 宜山路 2325号. 29위안/인. 合川路역.",distance:"闵行区 七宝"},
+   gq:"川香麻辣烫+九歌茗园+上海",desc:"마라탕. 宜山路 2325号. 29위안/인. 合川路역.",distance:"闵行区 七宝"},
   {nameKo:"小杨生煎",nameCn:"小杨生煎(古北1699店)",lat:31.1932,lng:121.3950,type:"food",color:"#ff7043",
-   desc:"생전 명가. 古北路 1699号 B2. 21위안/인. 평점 4.5.",distance:"古北 지역"},
+   gq:"小杨生煎+古北1699+上海",desc:"생전 명가. 古北路 1699号 B2. 21위안/인.",distance:"古北 지역"},
   {nameKo:"外婆家",nameCn:"外婆家(百盛优客店)",lat:31.2198,lng:121.4120,type:"food",color:"#ff7043",
-   desc:"강절요리. 天山路 789号 5F. 68위안/인. 평점 4.5.",distance:"中山公园 지역"}
+   gq:"外婆家+百盛优客+天山路+上海",desc:"강절요리. 天山路 789号 5F. 68위안/인.",distance:"中山公园 지역"}
 ];
 
 function isNearHotel(loc){
@@ -147,7 +154,8 @@ locations.forEach(loc=>{
   const marker=L.circleMarker([loc.lat,loc.lng],{radius:r,fillColor:loc.color,color:'#fff',weight:2,opacity:1,fillOpacity:.95}).addTo(map);
   if(isHotel)L.circleMarker([loc.lat,loc.lng],{radius:3,fillColor:'#fff',color:'transparent',weight:0,fillOpacity:.8,interactive:false}).addTo(map);
 
-  const gmapUrl=`https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}`;
+  // Google Maps link: search by Chinese name, not coordinates
+  const gmapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.gq||loc.nameCn)}`;
   const popup=`<div class="popup-title">${loc.nameKo}</div><div class="popup-subtitle">${loc.nameCn}</div><div class="popup-desc">${loc.desc}</div>${loc.distance?`<div class="popup-distance">${loc.distance}</div>`:''}<div class="popup-link"><a href="${gmapUrl}" target="_blank" rel="noopener">Google Maps →</a></div>`;
   marker.bindPopup(popup,{className:'custom-popup',maxWidth:300});
   marker.on('click',()=>{selected.push(loc);if(selected.length===2)showDistance()});
@@ -158,7 +166,7 @@ locations.forEach(loc=>{
   else if(loc.type==='food')cls+=' pin-label-food';
   const hoverCls=near?' hover-label':'';
   const labelId='lbl'+Math.random().toString(36).substr(2,6);
-  const label=L.divIcon({className:'',html:`<div id="${labelId}" class="${cls}${hoverCls}">${loc.nameKo}</div>`,iconSize:[0,0],iconAnchor:[-10,-4]});
+  const label=L.divIcon({className:'',html:`<div id="${labelId}" class="${cls}${hoverCls}">${loc.nameKo}</div>`,iconSize:[0,0],iconAnchor:[-9,5]});
   L.marker([loc.lat,loc.lng],{icon:label,interactive:false}).addTo(map);
   if(near){
     marker.on('mouseover',()=>{const el=document.getElementById(labelId);if(el)el.classList.add('show')});
