@@ -79,6 +79,8 @@ const locations=[
   {name:"Metro City",nameCn:"美罗城",nameKo:"메트로시티",lat:31.1872,lng:121.4430,type:"otaku",color:"#7c4dff",desc:"JUMP SHOP + CAFE, 지브리 샵. 徐家汇역.",distance:"숙소에서 ~6km"},
   {name:"LaLaport",nameCn:"LaLaport上海金桥",nameKo:"라라포트",lat:31.2450,lng:121.5850,type:"otaku",color:"#7c4dff",desc:"新金桥路 738号, 浦东. 대형몰.",distance:"숙소에서 ~11km"},
   // 식당
+  {name:"Lillian Bakery Daymaru",nameCn:"莉莲蛋挞(新世界大丸百货店)",nameKo:"릴리안 에그타르트 (大丸)",lat:31.2342,lng:121.4738,type:"food",color:"#ff7043",desc:"에그타르트 명가. 南京东路 228号 新世界大丸百货 B2. 원래맛+캐러멜 추천.",distance:"숙소에서 도보 3분"},
+  {name:"Lillian Bakery Xinshijie",nameCn:"莉莲蛋挞(新世界城店)",nameKo:"릴리안 에그타르트 (新世界城)",lat:31.2328,lng:121.4712,type:"food",color:"#ff7043",desc:"에그타르트 명가. 南京西路 2-68号 新世界城 B1.",distance:"숙소에서 도보 5분"},
   {name:"Rou Chuan Wang",nameCn:"肉串汪(外滩店)",nameKo:"肉串汪 양꼬치",lat:31.2478,lng:121.4902,type:"food",color:"#ff7043",desc:"양꼬치 현지 맛집. 吴淞路 130号. 10:30~01:30.",distance:"와이탄에서 택시 7분"},
   {name:"RedLips",nameCn:"红唇串串香(宏伊广场店)",nameKo:"RedLips 串串香",lat:31.2358,lng:121.4810,type:"food",color:"#ff7043",desc:"串串香(꼬치 훠궈). 南京东路 299号 宏伊广场 B1. 25위안/인. 10:00-21:30.",distance:"숙소에서 도보 5분"},
   {name:"Longwen Guilin Mifen",nameCn:"龙文桂林米粉(古北店)",nameKo:"龙文 쌀국수",lat:31.1920,lng:121.3960,type:"food",color:"#ff7043",desc:"桂林米粉. 长宁区 水城南路 51弄. 21위안/인. 09:00-21:00. 长宁区 米粉 2위.",distance:"长宁区 古北 지역"},
@@ -123,7 +125,8 @@ locations.forEach(loc=>{
   const marker=L.circleMarker([loc.lat,loc.lng],{radius:r,fillColor:loc.color,color:'#fff',weight:2,opacity:1,fillOpacity:.95}).addTo(map);
   if(isHotel) L.circleMarker([loc.lat,loc.lng],{radius:3,fillColor:'#fff',color:'transparent',weight:0,fillOpacity:.8,interactive:false}).addTo(map);
 
-  const popup=`<div class="popup-title">${loc.nameKo}</div><div class="popup-subtitle">${loc.nameCn}</div><div class="popup-desc">${loc.desc}</div>${loc.distance?`<div class="popup-distance">${loc.distance}</div>`:''}`;
+  const gmapUrl=`https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}`;
+  const popup=`<div class="popup-title">${loc.nameKo}</div><div class="popup-subtitle">${loc.nameCn}</div><div class="popup-desc">${loc.desc}</div>${loc.distance?`<div class="popup-distance">${loc.distance}</div>`:''}<div style="margin-top:8px"><a href="${gmapUrl}" target="_blank" rel="noopener" style="color:#2979ff;font-size:12px;font-weight:600;text-decoration:none">Google Maps →</a></div>`;
   marker.bindPopup(popup,{className:'custom-popup',maxWidth:300});
   marker.on('click',()=>{selected.push(loc);if(selected.length===2)showDistance()});
 
