@@ -123,148 +123,192 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const locations = [
+  // === 숙소 ===
   {
     name: "Grand Central Hotel Shanghai",
     nameCn: "上海大酒店",
     nameKo: "그랜드 센트럴 호텔",
-    lat: 31.2362,
-    lng: 121.4755,
-    type: "hotel",
-    color: "#e53935",
-    desc: "숙소. 九江路(주장루) 505号, 南京东路 보행가 바로 옆.",
+    lat: 31.2362, lng: 121.4755,
+    type: "hotel", color: "#e53935",
+    desc: "숙소. 九江路 505号, 南京东路 보행가 바로 옆.",
     distance: ""
   },
+
+  // === 관광지 ===
   {
-    name: "Nanjing Road Pedestrian Street",
+    name: "Nanjing East Road",
     nameCn: "南京东路步行街",
     nameKo: "난징동루 보행가",
-    lat: 31.23575,
-    lng: 121.47972,
-    type: "sight",
-    color: "#f9a825",
+    lat: 31.23575, lng: 121.47972,
+    type: "sight", color: "#f9a825",
     desc: "상하이 대표 보행자 거리. 숙소에서 도보 5분.",
     distance: "숙소에서 ~400m"
+  },
+  {
+    name: "Nanjing West Road",
+    nameCn: "南京西路",
+    nameKo: "난징시루",
+    lat: 31.2290, lng: 121.4510,
+    type: "sight", color: "#f9a825",
+    desc: "고급 브랜드 + 쇼핑 거리. 정안사, 장위엔과 같은 라인.",
+    distance: "숙소에서 ~2.5km"
   },
   {
     name: "The Bund",
     nameCn: "外滩",
     nameKo: "와이탄",
-    lat: 31.2403,
-    lng: 121.4906,
-    type: "sight",
-    color: "#f9a825",
-    desc: "浦东(푸동) 스카이라인 야경 명소. 밤에 갈 것.",
+    lat: 31.2403, lng: 121.4906,
+    type: "sight", color: "#f9a825",
+    desc: "浦东 스카이라인 야경 명소. 밤에 갈 것.",
     distance: "숙소에서 ~1.5km"
   },
   {
     name: "Xintiandi",
     nameCn: "新天地",
     nameKo: "신천지",
-    lat: 31.2195,
-    lng: 121.4728,
-    type: "sight",
-    color: "#f9a825",
-    desc: "石库门(스쿠먼) 건축 보존 지구. 카페, 바, 레스토랑 밀집.",
+    lat: 31.2195, lng: 121.4728,
+    type: "sight", color: "#f9a825",
+    desc: "石库门 건축 보존 지구. 카페, 바, 레스토랑 밀집.",
     distance: "숙소에서 ~2km"
   },
   {
     name: "Yu Garden",
     nameCn: "豫园",
     nameKo: "예원",
-    lat: 31.2272,
-    lng: 121.4921,
-    type: "sight",
-    color: "#f9a825",
-    desc: "명대 정원. 城隍庙(청황묘) 먹거리 골목 포함.",
+    lat: 31.2272, lng: 121.4921,
+    type: "sight", color: "#f9a825",
+    desc: "명대 정원. 城隍庙 먹거리 골목 포함.",
     distance: "숙소에서 ~2km"
-  },
-  {
-    name: "Bailian ZX",
-    nameCn: "百联ZX创趣场",
-    nameKo: "바이리엔ZX",
-    lat: 31.2370,
-    lng: 121.4790,
-    type: "otaku",
-    color: "#7c4dff",
-    desc: "6층 이차원 전문 상가. animate, ANIPLEX, 万代魂 등 50+ 브랜드. 상하이의 아키하바라.",
-    distance: "숙소에서 ~300m"
   },
   {
     name: "Jing'an Temple",
     nameCn: "静安寺",
     nameKo: "정안사",
-    lat: 31.2236,
-    lng: 121.4468,
-    type: "sight",
-    color: "#f9a825",
-    desc: "천년 역사 불교 사찰. 시내 한복판의 화려한 금색 건축. 입장료 50위안(~1만원), 약 1시간 소요.",
+    lat: 31.2236, lng: 121.4468,
+    type: "sight", color: "#f9a825",
+    desc: "천년 역사 불교 사찰. 시내 한복판 화려한 금색 건축. 입장료 50위안(~1만원), 약 1시간.",
     distance: "숙소에서 ~3km (지하철 2호선 직통)"
   },
   {
     name: "Tianzifang",
     nameCn: "田子坊",
     nameKo: "톈쯔팡",
-    lat: 31.2105,
-    lng: 121.4734,
-    type: "sight",
-    color: "#f9a825",
-    desc: "좁은 골목 사이 카페, 공방, 기념품 상점 밀집. 상하이 소품 쇼핑 명소.",
+    lat: 31.2105, lng: 121.4734,
+    type: "sight", color: "#f9a825",
+    desc: "골목 카페, 공방, 기념품 상점 밀집. 소품 쇼핑 명소.",
     distance: "숙소에서 ~3km"
   },
   {
     name: "Wukang Road",
     nameCn: "武康路",
     nameKo: "우캉루",
-    lat: 31.2130,
-    lng: 121.4400,
-    type: "sight",
-    color: "#f9a825",
-    desc: "프랑스 조계지 분위기. 플라타너스 가로수길, 武康大厦(우캉빌딩) 인증샷 명소.",
+    lat: 31.2130, lng: 121.4400,
+    type: "sight", color: "#f9a825",
+    desc: "프랑스 조계지 분위기. 플라타너스 가로수길, 武康大厦 인증샷 명소.",
     distance: "숙소에서 ~4km"
   },
   {
     name: "Oriental Pearl Tower",
     nameCn: "东方明珠",
     nameKo: "동방명주",
-    lat: 31.2397,
-    lng: 121.4998,
-    type: "sight",
-    color: "#f9a825",
-    desc: "상하이 대표 랜드마크 타워. 전망대 + 역사 전시. 와이탄에서 강 건너편.",
+    lat: 31.2397, lng: 121.4998,
+    type: "sight", color: "#f9a825",
+    desc: "상하이 대표 랜드마크 타워. 전망대 + 역사 전시.",
     distance: "숙소에서 ~2.5km"
   },
   {
     name: "Shanghai Tower",
     nameCn: "上海中心大厦",
     nameKo: "상하이타워",
-    lat: 31.2356,
-    lng: 121.5015,
-    type: "sight",
-    color: "#f9a825",
-    desc: "632m, 중국 최고층. 118층 전망대에서 상하이 전경 조망. 입장료 약 180위안(~3.6만원).",
+    lat: 31.2356, lng: 121.5015,
+    type: "sight", color: "#f9a825",
+    desc: "632m, 중국 최고층. 118층 전망대. 입장료 약 180위안(~3.6만원).",
     distance: "숙소에서 ~2.7km"
-  },
-  {
-    name: "Rou Chuan Wang",
-    nameCn: "肉串汪(外滩·外白渡桥店)",
-    nameKo: "肉串汪 양꼬치",
-    lat: 31.2478,
-    lng: 121.4902,
-    type: "food",
-    color: "#ff7043",
-    desc: "양꼬치 현지 맛집. 吴淞路 130号. 예약/웨이팅 없이 입장. 셋이서 330위안(~6.2만원). 10:30~01:30 영업.",
-    distance: "와이탄에서 택시 7분"
   },
   {
     name: "Zhangyuan",
     nameCn: "张园",
     nameKo: "장위엔",
-    lat: 31.2310,
-    lng: 121.4590,
-    type: "sight",
-    color: "#f9a825",
-    desc: "리노베이션된 石库门 건축군. 고급 브랜드 + 전시 공간. 무료 입장, 사진 스팟.",
+    lat: 31.2310, lng: 121.4590,
+    type: "sight", color: "#f9a825",
+    desc: "리노베이션 石库门 건축군. 고급 브랜드 + 전시 공간. 무료 입장.",
     distance: "숙소에서 ~1.5km"
+  },
+  {
+    name: "Korean Provisional Government",
+    nameCn: "大韩民国临时政府旧址",
+    nameKo: "대한민국 임시정부유적지",
+    lat: 31.2180, lng: 121.4705,
+    type: "sight", color: "#f9a825",
+    desc: "马当路 306弄 4号. 1919년 설립된 임시정부 유적. 09:00-11:30 / 13:30-17:00.",
+    distance: "숙소에서 ~2km (신천지 바로 옆)"
+  },
+
+  // === 덕질 ===
+  {
+    name: "Bailian ZX",
+    nameCn: "百联ZX创趣场",
+    nameKo: "바이리엔ZX",
+    lat: 31.2370, lng: 121.4790,
+    type: "otaku", color: "#7c4dff",
+    desc: "6층 이차원 전문 상가. animate, ANIPLEX, 万代魂 등 50+ 브랜드. 6층 인형뽑기. 10:00-22:00.",
+    distance: "숙소에서 ~300m"
+  },
+  {
+    name: "Henderson Metropolitan",
+    nameCn: "恒基名人购物中心",
+    nameKo: "헨더슨 메트로폴리탄",
+    lat: 31.2355, lng: 121.4828,
+    type: "otaku", color: "#7c4dff",
+    desc: "바이리엔ZX 근처 쇼핑몰. 南京东路역 바로 연결.",
+    distance: "바이리엔ZX에서 도보 5분"
+  },
+  {
+    name: "Baimi Xiangxie Street",
+    nameCn: "百米香榭商业街",
+    nameKo: "백미향사상점가",
+    lat: 31.2372, lng: 121.4733,
+    type: "otaku", color: "#7c4dff",
+    desc: "广西北路 252号 中福城 2기. 바이미샹쉐.",
+    distance: "숙소에서 ~200m"
+  },
+  {
+    name: "Shanghai Jing'an Joy City",
+    nameCn: "上海静安大悦城",
+    nameKo: "징안 조이시티",
+    lat: 31.2440, lng: 121.4680,
+    type: "otaku", color: "#7c4dff",
+    desc: "西藏北路 166号. 이차원 + 일반 쇼핑 복합몰.",
+    distance: "숙소에서 ~2km"
+  },
+  {
+    name: "Metro City",
+    nameCn: "美罗城",
+    nameKo: "메트로시티",
+    lat: 31.1872, lng: 121.4430,
+    type: "otaku", color: "#7c4dff",
+    desc: "肇嘉浜路 1111号. JUMP SHOP + JUMP CAFE(1-2F), 지브리 샵 입점. 지하철 徐家汇역 10번 출구.",
+    distance: "숙소에서 ~6km (지하철 1/9/11호선 徐家汇역)"
+  },
+  {
+    name: "LaLaport Shanghai Jinqiao",
+    nameCn: "LaLaport上海金桥",
+    nameKo: "라라포트 진차오",
+    lat: 31.2450, lng: 121.5850,
+    type: "otaku", color: "#7c4dff",
+    desc: "新金桥路 738号, 浦东. 대형 쇼핑몰 + 덕질 매장.",
+    distance: "숙소에서 ~11km (浦东 방면)"
+  },
+
+  // === 식당 ===
+  {
+    name: "Rou Chuan Wang",
+    nameCn: "肉串汪(外滩·外白渡桥店)",
+    nameKo: "肉串汪 양꼬치",
+    lat: 31.2478, lng: 121.4902,
+    type: "food", color: "#ff7043",
+    desc: "양꼬치 현지 맛집. 吴淞路 130号. 예약/웨이팅 없이 입장. 셋이서 330위안(~6.2만원). 10:30~01:30.",
+    distance: "와이탄에서 택시 7분"
   }
 ];
 
@@ -281,7 +325,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
   maxZoom: 19
 }).addTo(map);
 
-// Distance measurement state
+// Distance measurement
 let selected = [];
 let distanceLine = null;
 const distanceBar = document.getElementById('distance-bar');
@@ -305,7 +349,7 @@ function showDistance() {
   const a = selected[0], b = selected[1];
   const meters = haversine(a.lat, a.lng, b.lat, b.lng);
   const km = (meters / 1000).toFixed(1);
-  const walkMin = Math.round(meters / 80); // ~80m/min walking
+  const walkMin = Math.round(meters / 80);
 
   if (distanceLine) map.removeLayer(distanceLine);
   distanceLine = L.polyline([[a.lat, a.lng], [b.lat, b.lng]], {
@@ -321,8 +365,7 @@ function showDistance() {
   selected = [];
 }
 
-// Custom circle markers
-const markers = [];
+// Markers
 locations.forEach(loc => {
   const radius = loc.type === 'hotel' ? 12 : 9;
   const marker = L.circleMarker([loc.lat, loc.lng], {
@@ -347,7 +390,6 @@ locations.forEach(loc => {
     if (selected.length === 2) showDistance();
   });
 
-  // Label
   const label = L.divIcon({
     className: 'marker-label',
     html: `<span style="
@@ -361,12 +403,11 @@ locations.forEach(loc => {
     iconAnchor: [-14, 4]
   });
   L.marker([loc.lat, loc.lng], { icon: label, interactive: false }).addTo(map);
-
-  markers.push(marker);
 });
 
-// Fit bounds with padding
-const bounds = L.latLngBounds(locations.map(l => [l.lat, l.lng]));
+// Fit bounds (exclude LaLaport for better zoom on central area)
+const centralLocs = locations.filter(l => l.lng < 121.55);
+const bounds = L.latLngBounds(centralLocs.map(l => [l.lat, l.lng]));
 map.fitBounds(bounds, { padding: [80, 60] });
 </script>
 </body>
