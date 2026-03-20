@@ -114,21 +114,25 @@ const locations = [
    type:"hotel", emoji:"🏨", addr:"九江路 505号", desc:"숙소. 人民广场 도보 10분."},
 
   // ── 관광지 ──
-  // ⚠️ Nominatim 南京东路 중심부, 바이리엔ZX와 같은 블록
+  // 난징동루 보행가: 西藏中路(서)~河南中路(동), 약 1.2km
   {id:2, ko:"난징동루 보행가", cn:"南京东路步行街", lat:31.2375, lng:121.4820,
-   type:"sight", emoji:"🛍️", addr:"南京东路", desc:"상하이 대표 보행자 거리. 야간 네온사인이 핵심."},
+   type:"sight", emoji:"🛍️", addr:"南京东路", desc:"상하이 대표 보행자 거리. 야간 네온사인이 핵심.",
+   area:[[31.2382,121.4740],[31.2382,121.4900],[31.2368,121.4900],[31.2368,121.4740]]},
 
-  // ✅ Photon+Nominatim 일치
-  {id:3, ko:"난징시루", cn:"南京西路", lat:31.2305, lng:121.4580,
-   type:"sight", emoji:"🏬", addr:"南京西路", desc:"고급 브랜드 + 쇼핑 거리. 정안사·장위엔 라인."},
+  // 난징시루: 静安寺~人民广场 구간, 고급 쇼핑가
+  {id:3, ko:"난징시루", cn:"南京西路", lat:31.2305, lng:121.4500,
+   type:"sight", emoji:"🏬", addr:"南京西路", desc:"고급 브랜드 + 쇼핑 거리. 정안사·장위엔 라인.",
+   area:[[31.2315,121.4410],[31.2315,121.4700],[31.2295,121.4700],[31.2295,121.4410]]},
 
-  // ⚠️ Nominatim 中山东一路 중심
-  {id:4, ko:"와이탄", cn:"外滩", lat:31.2390, lng:121.4862,
-   type:"sight", emoji:"🌃", addr:"中山东一路", desc:"浦东 스카이라인 야경. 밤에 갈 것."},
+  // 와이탄: 外白渡桥(북)~延安东路(남), 黄浦江 서안
+  {id:4, ko:"와이탄", cn:"外滩", lat:31.2390, lng:121.4870,
+   type:"sight", emoji:"🌃", addr:"中山东一路", desc:"浦东 스카이라인 야경. 밤에 갈 것.",
+   area:[[31.2460,121.4860],[31.2460,121.4895],[31.2320,121.4895],[31.2320,121.4860]]},
 
-  // ✅ Photon 新天地(太仓路) 매칭
-  {id:5, ko:"신천지", cn:"新天地", lat:31.2237, lng:121.4712,
-   type:"sight", emoji:"🍸", addr:"太仓路/马当路", desc:"石库门 건축 보존 지구. 카페, 바, 레스토랑."},
+  // 신천지: 黄陂南路·太仓路·马当路·兴业路 둘러싼 구역
+  {id:5, ko:"신천지", cn:"新天地", lat:31.2225, lng:121.4720,
+   type:"sight", emoji:"🍸", addr:"太仓路/马当路", desc:"石库门 건축 보존 지구. 카페, 바, 레스토랑.",
+   area:[[31.2255,121.4685],[31.2255,121.4755],[31.2195,121.4755],[31.2195,121.4685]]},
 
   // ✅ Photon 豫园 직접 매칭
   {id:6, ko:"예원", cn:"豫园", lat:31.2289, lng:121.4880,
@@ -203,6 +207,7 @@ const types = ["hotel","sight","otaku","food"];
 let activeFilters = new Set(types);
 let markers = {};
 let labelMarkers = [];
+let areaPolygons = [];
 let selected = [];
 let distLine = null;
 
@@ -255,8 +260,10 @@ function showDist() {
 function render() {
   Object.values(markers).forEach(function(m) { map.removeLayer(m); });
   labelMarkers.forEach(function(m) { map.removeLayer(m); });
+  areaPolygons.forEach(function(p) { map.removeLayer(p); });
   markers = {};
   labelMarkers = [];
+  areaPolygons = [];
 
   var filtered = locations.filter(function(l) { return activeFilters.has(l.type); });
   var listEl = document.getElementById("loc-list");
@@ -268,6 +275,21 @@ function render() {
 
   filtered.forEach(function(loc) {
     var c = colorMap[loc.type];
+
+    // Draw area polygon if defined
+    if (loc.area) {
+      var poly = L.polygon(loc.area, {
+        color: c,
+        weight: 2,
+        opacity: 0.6,
+        fillColor: c,
+        fillOpacity: 0.12,
+        dashArray: "6,4",
+        interactive: false
+      }).addTo(map);
+      areaPolygons.push(poly);
+    }
+
     var icon = L.divIcon({
       className: "",
       html: '<div class="emoji-marker ' + loc.type + '" style="background:' + c + '">' + loc.emoji + '</div>',
