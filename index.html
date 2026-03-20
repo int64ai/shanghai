@@ -252,7 +252,7 @@ function render(){
     const colorMap={hotel:"#e53935",sight:"#f9a825",otaku:"#7c4dff",food:"#ff7043"};
     const c=colorMap[loc.type];
     const icon=L.divIcon({className:"",html:`<div class="emoji-marker ${loc.type}" style="background:${c}">${loc.emoji}</div>`,iconSize:[36,36],iconAnchor:[18,18],popupAnchor:[0,-20]});
-    const gmapUrl=`https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}`;
+    const gmapUrl=`https://www.google.com/maps/search/${encodeURIComponent(loc.cn+" "+loc.addr+" 上海")}`;
     const amapUrl=`https://uri.amap.com/marker?position=${loc.lng},${loc.lat}&name=${encodeURIComponent(loc.cn)}`;
     const popup=`<div class="popup-head"><span class="popup-emoji">${loc.emoji}</span><span class="popup-title">${loc.ko}</span></div><div class="popup-cn">${loc.cn}</div><div class="popup-addr">📍 ${loc.addr}</div><div class="popup-desc">${loc.desc}</div><div class="popup-links"><a href="${gmapUrl}" target="_blank">Google Maps ↗</a><a href="${amapUrl}" target="_blank">高德地图 ↗</a></div>`;
 
