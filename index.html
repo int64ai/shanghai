@@ -2,180 +2,308 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>상하이 여행 지도</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>上海 4泊5日</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:#f5f5f5;color:#333}
-  #map{width:100%;height:100vh}
-  .custom-popup .leaflet-popup-content-wrapper{background:#fff;color:#333;border:none;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.14)}
-  .custom-popup .leaflet-popup-tip{background:#fff}
-  .custom-popup .leaflet-popup-content{margin:14px 18px;font-size:14px;line-height:1.7}
-  .popup-title{font-size:17px;font-weight:700;margin-bottom:3px;color:#1a1a1a}
-  .popup-subtitle{font-size:11px;color:#999;margin-bottom:8px;letter-spacing:.3px}
-  .popup-desc{font-size:13px;color:#555;line-height:1.6}
-  .popup-distance{font-size:12px;color:#2979ff;margin-top:6px;font-weight:600}
-  .popup-link{margin-top:8px}
-  .popup-link a{color:#2979ff;font-size:12px;font-weight:600;text-decoration:none}
-  .legend{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border:1px solid rgba(0,0,0,.08);border-radius:14px;padding:10px 22px;z-index:1000;display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:90vw;box-shadow:0 4px 20px rgba(0,0,0,.08)}
-  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;white-space:nowrap;color:#555}
-  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.15)}
-  .title-bar{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 20px;z-index:1000;text-align:center;box-shadow:0 1px 8px rgba(0,0,0,.04)}
-  .title-bar h1{font-size:17px;font-weight:700;letter-spacing:2px;color:#1a1a1a}
-  .title-bar p{font-size:11px;color:#aaa;margin-top:3px}
-  .distance-bar{position:fixed;top:72px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2979ff,#1565c0);color:#fff;border:none;border-radius:16px;padding:18px 32px;z-index:1000;font-size:15px;font-weight:600;box-shadow:0 8px 32px rgba(41,121,255,.4);display:none;text-align:center;max-width:92vw;line-height:1.6;min-width:280px}
-  .distance-bar .route{font-size:14px;font-weight:600;opacity:.95;margin-bottom:6px}
-  .distance-bar .stats{font-size:26px;font-weight:700}
-  .distance-bar .stats small{font-size:14px;font-weight:500;opacity:.85;margin-left:6px}
-  .distance-bar .close-btn{position:absolute;top:10px;right:14px;color:rgba(255,255,255,.7);cursor:pointer;font-size:20px;line-height:1}
-  .distance-bar .close-btn:hover{color:#fff}
-  .pin-label{font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;color:#333;background:rgba(255,255,255,.92);padding:1px 6px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.1);white-space:nowrap;pointer-events:none;border:1px solid rgba(0,0,0,.06);line-height:1.4}
-  .pin-label-hotel{background:rgba(229,57,53,.12);color:#c62828;border-color:rgba(229,57,53,.2)}
-  .pin-label-otaku{background:rgba(124,77,255,.1);color:#5e35b1;border-color:rgba(124,77,255,.15)}
-  .pin-label-food{background:rgba(255,112,67,.1);color:#d84315;border-color:rgba(255,112,67,.15)}
-  .hover-label{opacity:0;transition:opacity .15s ease}
-  .hover-label.show{opacity:1}
+:root{--bg:#ffffff;--card:rgba(255,255,255,.92);--text:#1a1a1a;--sub:#888;--border:rgba(0,0,0,.06);--shadow:0 8px 32px rgba(0,0,0,.08);--hotel:#e53935;--sight:#f9a825;--otaku:#7c4dff;--food:#ff7043;--accent:#2979ff;--sidebar-w:320px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;width:100vw}
+
+/* === HEADER === */
+.header{position:fixed;top:0;left:0;right:0;height:56px;background:var(--card);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;padding:0 20px;gap:12px}
+.header h1{font-size:18px;font-weight:700;letter-spacing:1px}
+.header .badge{font-size:11px;background:var(--accent);color:#fff;padding:2px 8px;border-radius:99px;font-weight:600}
+.header .hint{margin-left:auto;font-size:11px;color:var(--sub)}
+
+/* === SIDEBAR === */
+.sidebar{position:fixed;top:56px;left:0;bottom:0;width:var(--sidebar-w);background:var(--card);backdrop-filter:blur(20px);border-right:1px solid var(--border);z-index:900;display:flex;flex-direction:column;overflow:hidden;transition:transform .3s ease}
+.sidebar.closed{transform:translateX(-100%)}
+.sidebar-toggle{position:fixed;top:68px;left:8px;z-index:950;width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--shadow)}
+.filters{padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.filter-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;user-select:none}
+.filter-btn:hover{border-color:#ccc}
+.filter-btn.active{border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,white)}
+.filter-btn .dot{width:8px;height:8px;border-radius:50%}
+.loc-list{flex:1;overflow-y:auto;padding:8px 0}
+.loc-list::-webkit-scrollbar{width:4px}
+.loc-list::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+.loc-item{padding:10px 16px;cursor:pointer;transition:background .15s;display:flex;align-items:flex-start;gap:10px;border-bottom:1px solid var(--border)}
+.loc-item:hover{background:rgba(0,0,0,.03)}
+.loc-item.highlight{background:color-mix(in srgb,var(--accent) 8%,white)}
+.loc-emoji{font-size:20px;flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(0,0,0,.04)}
+.loc-info{flex:1;min-width:0}
+.loc-name{font-size:13px;font-weight:600;line-height:1.4}
+.loc-cn{font-size:11px;color:var(--sub);margin-top:1px}
+.loc-desc{font-size:11px;color:#666;margin-top:3px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.loc-count{padding:8px 16px;font-size:11px;color:var(--sub);font-weight:500}
+
+/* === MAP === */
+#map{position:fixed;top:56px;left:var(--sidebar-w);right:0;bottom:0;z-index:1}
+.leaflet-control-zoom{border:none!important;box-shadow:var(--shadow)!important}
+.leaflet-control-zoom a{background:var(--card)!important;backdrop-filter:blur(12px);color:var(--text)!important;border:1px solid var(--border)!important;width:36px!important;height:36px!important;line-height:36px!important;font-size:16px!important}
+
+/* === CUSTOM MARKER === */
+.emoji-marker{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;font-size:18px;box-shadow:0 3px 12px rgba(0,0,0,.2);border:2.5px solid #fff;transition:transform .15s;cursor:pointer}
+.emoji-marker:hover{transform:scale(1.2)}
+.emoji-marker.hotel{background:var(--hotel)}
+.emoji-marker.sight{background:var(--sight)}
+.emoji-marker.otaku{background:var(--otaku)}
+.emoji-marker.food{background:var(--food)}
+
+/* === POPUP === */
+.custom-popup .leaflet-popup-content-wrapper{background:var(--bg);border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.custom-popup .leaflet-popup-tip{background:var(--bg)}
+.custom-popup .leaflet-popup-content{margin:16px 20px;font-size:14px;line-height:1.7}
+.popup-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.popup-emoji{font-size:24px}
+.popup-title{font-size:16px;font-weight:700}
+.popup-cn{font-size:12px;color:var(--sub);margin-top:-4px;margin-bottom:8px}
+.popup-addr{font-size:12px;color:#555;background:rgba(0,0,0,.04);padding:6px 10px;border-radius:8px;margin-bottom:8px}
+.popup-desc{font-size:13px;color:#444;line-height:1.6;margin-bottom:8px}
+.popup-dist{font-size:12px;color:var(--accent);font-weight:600}
+.popup-links{display:flex;gap:8px;margin-top:8px}
+.popup-links a{font-size:12px;color:var(--accent);font-weight:600;text-decoration:none;padding:4px 10px;border-radius:6px;background:color-mix(in srgb,var(--accent) 8%,white);transition:background .2s}
+.popup-links a:hover{background:color-mix(in srgb,var(--accent) 15%,white)}
+
+/* === DISTANCE BAR === */
+.dist-bar{position:fixed;top:68px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2979ff,#1565c0);color:#fff;border-radius:16px;padding:16px 28px;z-index:1100;box-shadow:0 8px 32px rgba(41,121,255,.4);display:none;text-align:center;min-width:260px;max-width:90vw}
+.dist-bar .route{font-size:13px;opacity:.9;margin-bottom:4px}
+.dist-bar .stats{font-size:24px;font-weight:700}
+.dist-bar .stats small{font-size:13px;font-weight:400;opacity:.85;margin-left:6px}
+.dist-bar .close{position:absolute;top:8px;right:12px;cursor:pointer;font-size:18px;opacity:.7}
+.dist-bar .close:hover{opacity:1}
+
+/* === LEGEND (bottom) === */
+.legend{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--card);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:14px;padding:8px 20px;z-index:1000;display:flex;gap:16px;box-shadow:var(--shadow)}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#555}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+
+/* === MOBILE === */
+@media(max-width:768px){
+  :root{--sidebar-w:100vw}
+  .sidebar{top:auto;bottom:0;left:0;right:0;width:100%;height:55vh;border-right:none;border-top:1px solid var(--border);border-radius:20px 20px 0 0;transform:translateY(calc(100% - 48px));transition:transform .3s ease}
+  .sidebar.open{transform:translateY(0)}
+  .sidebar-handle{display:block;width:40px;height:4px;background:#ccc;border-radius:2px;margin:10px auto 6px}
+  .sidebar-toggle{display:flex}
+  #map{left:0}
+  .header .hint{display:none}
+  .legend{bottom:56px;font-size:10px;padding:6px 14px;gap:10px}
+}
 </style>
 </head>
 <body>
-<div class="title-bar">
-  <h1>上海 4泊5日</h1>
-  <p>핀 두 개를 순서대로 클릭 → 거리 표시</p>
+
+<div class="header">
+  <h1>🇨🇳 上海 4泊5日</h1>
+  <span class="badge">26곳</span>
+  <span class="hint">📍 핀 2개를 클릭하면 거리 측정</span>
 </div>
-<div id="distance-bar" class="distance-bar"></div>
+
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-handle" style="display:none" id="handle"></div>
+  <div class="filters" id="filters"></div>
+  <div class="loc-count" id="loc-count"></div>
+  <div class="loc-list" id="loc-list"></div>
+</div>
+
+<div id="dist-bar" class="dist-bar"></div>
 <div id="map"></div>
+
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#e53935"></div>숙소</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#f9a825"></div>관광지</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#7c4dff"></div>덕질</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#ff7043"></div>식당</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--hotel)"></div>숙소</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--sight)"></div>관광지</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--otaku)"></div>덕질</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--food)"></div>식당</div>
 </div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/*
-  COORDINATES VERIFIED 2026-03-20
-  Sources: OSM Overpass API (way/node), Google Maps user links, Nominatim
-  Google Maps links: name-based search (not coordinate-based)
-*/
-const HOTEL={lat:31.2371,lng:121.4770};
-const NEARBY_DIST=0.006;
-
+// === ALL COORDINATES AUDITED & CORRECTED 2026-03-20 ===
 const locations=[
-  // === 숙소 ===
-  {nameKo:"그랜드 센트럴 호텔",nameCn:"上海大酒店",lat:31.2371,lng:121.4770,type:"hotel",color:"#e53935",
-   gq:"上海大酒店+九江路505号",desc:"숙소. 九江路 505号.",distance:""},
+  // 숙소
+  {id:1,ko:"그랜드 센트럴 호텔",cn:"上海大酒店",lat:31.2371,lng:121.4770,type:"hotel",emoji:"🏨",
+   addr:"九江路 505号",desc:"숙소. 人民广场 도보 10분."},
 
-  // === 관광지 — OSM verified ===
-  {nameKo:"난징루 보행가",nameCn:"南京路步行街",lat:31.2381,lng:121.4752,type:"sight",color:"#f9a825",
-   gq:"南京路步行街+上海",desc:"상하이 대표 보행자 거리.",distance:"숙소에서 ~400m"},
-  {nameKo:"난징시루",nameCn:"南京西路",lat:31.2305,lng:121.4580,type:"sight",color:"#f9a825",
-   gq:"南京西路+上海",desc:"고급 브랜드 + 쇼핑 거리.",distance:"숙소에서 ~2km"},
-  {nameKo:"와이탄",nameCn:"外滩",lat:31.2403,lng:121.4906,type:"sight",color:"#f9a825",
-   gq:"外滩+上海",desc:"浦东 스카이라인 야경. 밤에 갈 것.",distance:"숙소에서 ~1.5km"},
-  {nameKo:"신천지",nameCn:"新天地",lat:31.2219,lng:121.4705,type:"sight",color:"#f9a825",
-   gq:"新天地+上海",desc:"石库门 건축 보존 지구. 카페, 바, 레스토랑.",distance:"숙소에서 ~2km"},
-  {nameKo:"예원",nameCn:"豫园",lat:31.2299,lng:121.4829,type:"sight",color:"#f9a825",
-   gq:"豫园+上海",desc:"명대 정원. 城隍庙 먹거리 골목.",distance:"숙소에서 ~1.5km"},
-  {nameKo:"정안사",nameCn:"静安寺",lat:31.2254,lng:121.4407,type:"sight",color:"#f9a825",
-   gq:"静安寺+上海",desc:"천년 불교 사찰. 입장료 50위안.",distance:"숙소에서 ~3km (2호선)"},
-  {nameKo:"톈쯔팡",nameCn:"田子坊",lat:31.2102,lng:121.4641,type:"sight",color:"#f9a825",
-   gq:"田子坊+上海",desc:"골목 카페, 공방, 기념품.",distance:"숙소에서 ~3km"},
-  {nameKo:"우캉루",nameCn:"武康大楼",lat:31.2063,lng:121.4337,type:"sight",color:"#f9a825",
-   gq:"武康大楼+上海",desc:"프랑스 조계지. 武康大厦 인증샷.",distance:"숙소에서 ~4.5km"},
-  {nameKo:"동방명주",nameCn:"东方明珠塔",lat:31.2415,lng:121.4957,type:"sight",color:"#f9a825",
-   gq:"东方明珠塔+上海",desc:"상하이 랜드마크 타워. 전망대.",distance:"숙소에서 ~2km"},
-  {nameKo:"상하이타워",nameCn:"上海中心大厦",lat:31.2356,lng:121.5013,type:"sight",color:"#f9a825",
-   gq:"上海中心大厦",desc:"632m 중국 최고층. 118층 전망대. 180위안.",distance:"숙소에서 ~2.5km"},
-  {nameKo:"장위엔",nameCn:"张园",lat:31.2312,lng:121.4574,type:"sight",color:"#f9a825",
-   gq:"张园+茂名北路+上海",desc:"리노베이션 石库门. 무료 입장.",distance:"숙소에서 ~1.5km"},
-  {nameKo:"임시정부유적지",nameCn:"大韩民国临时政府旧址",lat:31.2192,lng:121.4702,type:"sight",color:"#f9a825",
-   gq:"大韩民国临时政府旧址+上海",desc:"马当路 306弄. 09:00-17:00.",distance:"신천지 바로 옆"},
+  // 관광지 (corrected)
+  {id:2,ko:"난징동루 보행가",cn:"南京东路步行街",lat:31.2391,lng:121.4792,type:"sight",emoji:"🛍️",
+   addr:"南京东路",desc:"상하이 대표 보행자 거리. 야간 네온사인이 핵심."},
+  {id:3,ko:"난징시루",cn:"南京西路",lat:31.2305,lng:121.4580,type:"sight",emoji:"🏬",
+   addr:"南京西路",desc:"고급 브랜드 + 쇼핑 거리. 정안사·장위엔 라인."},
+  {id:4,ko:"와이탄",cn:"外滩",lat:31.2404,lng:121.4856,type:"sight",emoji:"🌃",
+   addr:"中山东一路",desc:"浦东 스카이라인 야경. 밤에 갈 것."},
+  {id:5,ko:"신천지",cn:"新天地",lat:31.2241,lng:121.4710,type:"sight",emoji:"🍸",
+   addr:"太仓路/马当路",desc:"石库门 건축 보존 지구. 카페, 바, 레스토랑."},
+  {id:6,ko:"예원",cn:"豫园",lat:31.2314,lng:121.4843,type:"sight",emoji:"🏯",
+   addr:"人民路 218号",desc:"명대 정원. 城隍庙 먹거리 골목."},
+  {id:7,ko:"정안사",cn:"静安寺",lat:31.2252,lng:121.4408,type:"sight",emoji:"🛕",
+   addr:"南京西路 1686号",desc:"천년 불교 사찰. 입장료 50위안. 약 1시간."},
+  {id:8,ko:"톈쯔팡",cn:"田子坊",lat:31.2103,lng:121.4641,type:"sight",emoji:"🎨",
+   addr:"泰康路 210弄",desc:"골목 카페, 공방, 기념품."},
+  {id:9,ko:"우캉루",cn:"武康路",lat:31.2139,lng:121.4362,type:"sight",emoji:"🇫🇷",
+   addr:"武康路",desc:"프랑스 조계지. 武康大厦 인증샷 필수."},
+  {id:10,ko:"동방명주",cn:"东方明珠",lat:31.2419,lng:121.4953,type:"sight",emoji:"🗼",
+   addr:"世纪大道 1号",desc:"상하이 랜드마크 타워. 전망대."},
+  {id:11,ko:"상하이타워",cn:"上海中心大厦",lat:31.2356,lng:121.5012,type:"sight",emoji:"🏙️",
+   addr:"银城中路 501号",desc:"632m 중국 최고층. 118층 전망대. 180위안."},
+  {id:12,ko:"장위엔",cn:"张园",lat:31.2300,lng:121.4548,type:"sight",emoji:"🏘️",
+   addr:"茂名北路 188弄",desc:"리노베이션 石库门. 무료 입장."},
+  {id:13,ko:"임시정부유적지",cn:"大韩民国临时政府旧址",lat:31.2192,lng:121.4702,type:"sight",emoji:"🇰🇷",
+   addr:"马当路 306弄 4号",desc:"1919년 설립. 09:00-17:00. 한국인 필수 코스."},
 
-  // === 덕질 — OSM verified ===
-  {nameKo:"바이리엔ZX",nameCn:"百联ZX创趣场",lat:31.2391,lng:121.4788,type:"otaku",color:"#7c4dff",
-   gq:"百联ZX创趣场+上海",desc:"6층 이차원 상가. 50+ 브랜드. 10-22시.",distance:"숙소에서 ~300m"},
-  {nameKo:"헨더슨",nameCn:"恒基名人购物中心",lat:31.2398,lng:121.4797,type:"otaku",color:"#7c4dff",
-   gq:"恒基名人购物中心+上海",desc:"南京东路역 직결.",distance:"바이리엔ZX에서 도보 3분"},
-  {nameKo:"백미향사",nameCn:"百米香榭商业街",lat:31.2342,lng:121.4738,type:"otaku",color:"#7c4dff",
-   gq:"百米香榭商业街+广西北路+上海",desc:"广西北路 252号 中福城 2기.",distance:"숙소에서 ~200m"},
-  {nameKo:"징안 조이시티",nameCn:"上海静安大悦城",lat:31.2466,lng:121.4675,type:"otaku",color:"#7c4dff",
-   gq:"静安大悦城+上海",desc:"西藏北路 166号. 이차원 + 쇼핑 복합몰.",distance:"숙소에서 ~2km"},
-  {nameKo:"메트로시티",nameCn:"美罗城",lat:31.1949,lng:121.4352,type:"otaku",color:"#7c4dff",
-   gq:"美罗城+上海+徐家汇",desc:"JUMP SHOP + CAFE, 지브리 샵. 徐家汇역.",distance:"숙소에서 ~6km"},
-  {nameKo:"라라포트",nameCn:"LaLaport上海金桥",lat:31.2523,lng:121.6081,type:"otaku",color:"#7c4dff",
-   gq:"三井购物公园LaLaport+上海金桥",desc:"新金桥路 738号, 浦东. 대형몰.",distance:"숙소에서 ~13km"},
+  // 덕질 (corrected)
+  {id:14,ko:"바이리엔ZX",cn:"百联ZX创趣场",lat:31.2407,lng:121.4843,type:"otaku",emoji:"🎮",
+   addr:"南京东路 340-372号",desc:"6층 이차원 상가. 50+ 브랜드. 6F 인형뽑기. 10-22시."},
+  {id:15,ko:"헨더슨",cn:"恒基名人购物中心",lat:31.2395,lng:121.4797,type:"otaku",emoji:"🛒",
+   addr:"南京东路 300号",desc:"南京东路역 2호출구 직결."},
+  {id:16,ko:"백미향사",cn:"百米香榭商业街",lat:31.2342,lng:121.4738,type:"otaku",emoji:"📦",
+   addr:"广西北路 252号 中福城",desc:"중고/피규어 거래 밀집."},
+  {id:17,ko:"징안 조이시티",cn:"上海静安大悦城",lat:31.2312,lng:121.4684,type:"otaku",emoji:"🎡",
+   addr:"西藏北路 166号",desc:"이차원 + 쇼핑 복합몰."},
+  {id:18,ko:"메트로시티",cn:"美罗城",lat:31.1949,lng:121.4356,type:"otaku",emoji:"🎌",
+   addr:"肇嘉浜路 1111号",desc:"JUMP SHOP + CAFE, 지브리 샵. 徐家汇역."},
+  {id:19,ko:"라라포트",cn:"LaLaport上海金桥",lat:31.2583,lng:121.6141,type:"otaku",emoji:"🏪",
+   addr:"新金桥路 738号",desc:"浦东 대형몰. 일본 브랜드 다수."},
 
-  // === 식당 ===
-  {nameKo:"릴리안 에그타르트",nameCn:"莉莲蛋挞(新世界城)",lat:31.2349037,lng:121.4736472,type:"food",color:"#ff7043",
-   gq:"莉莲蛋挞+新世界城+上海",desc:"에그타르트 명가. 新世界城 B1. 원래맛+캐러멜 추천.",distance:"숙소에서 도보 3분"},
-  {nameKo:"肉串汪 양꼬치",nameCn:"肉串汪(外滩店)",lat:31.2502,lng:121.4855,type:"food",color:"#ff7043",
-   gq:"肉串汪+外滩+上海",desc:"양꼬치. 吴淞路 130号. 10:30~01:30.",distance:"와이탄 근처"},
-  {nameKo:"RedLips 串串香",nameCn:"红唇串串香(宏伊广场店)",lat:31.2388,lng:121.4800,type:"food",color:"#ff7043",
-   gq:"红唇串串香+宏伊国际广场+上海",desc:"꼬치 훠궈. 南京东路 299号 宏伊广场 B1. 25위안/인.",distance:"숙소에서 도보 5분"},
-  {nameKo:"龙文 쌀국수",nameCn:"龙文桂林米粉(古北店)",lat:31.2003,lng:121.3881,type:"food",color:"#ff7043",
-   gq:"龙文桂林米粉+古北+上海",desc:"桂林米粉. 水城南路 51弄. 21위안/인.",distance:"长宁区 古北"},
-  {nameKo:"川香 마라탕",nameCn:"川香麻辣烫(九歌茗园店)",lat:31.1907,lng:121.3724,type:"food",color:"#ff7043",
-   gq:"川香麻辣烫+九歌茗园+上海",desc:"마라탕. 宜山路 2325号. 29위안/인. 合川路역.",distance:"闵行区 七宝"},
-  {nameKo:"小杨生煎",nameCn:"小杨生煎(古北1699店)",lat:31.1932,lng:121.3950,type:"food",color:"#ff7043",
-   gq:"小杨生煎+古北1699+上海",desc:"생전 명가. 古北路 1699号 B2. 21위안/인.",distance:"古北 지역"},
-  {nameKo:"外婆家",nameCn:"外婆家(百盛优客店)",lat:31.2198,lng:121.4120,type:"food",color:"#ff7043",
-   gq:"外婆家+百盛优客+天山路+上海",desc:"강절요리. 天山路 789号 5F. 68위안/인.",distance:"中山公园 지역"}
+  // 식당 (corrected)
+  {id:20,ko:"릴리안 에그타르트",cn:"莉莲蛋挞",lat:31.2349,lng:121.4736,type:"food",emoji:"🥧",
+   addr:"新世界城 B1",desc:"에그타르트 명가. 원래맛+캐러멜 추천."},
+  {id:21,ko:"肉串汪 양꼬치",cn:"肉串汪(外滩店)",lat:31.2474,lng:121.4849,type:"food",emoji:"🍢",
+   addr:"吴淞路 130号 城投控股大厦",desc:"양꼬치. 10:00~다음날 01:30."},
+  {id:22,ko:"RedLips 串串香",cn:"红唇串串香",lat:31.2407,lng:121.4843,type:"food",emoji:"🌶️",
+   addr:"南京东路 299号 宏伊广场 B1",desc:"꼬치 훠궈. ~39위안/인. 10:00-21:30."},
+  {id:23,ko:"龙文 쌀국수",cn:"龙文桂林米粉",lat:31.2003,lng:121.3881,type:"food",emoji:"🍜",
+   addr:"水城南路 51弄 18号",desc:"桂林米粉. ~26위안/인."},
+  {id:24,ko:"川향 마라탕",cn:"川香麻辣烫",lat:31.1907,lng:121.3724,type:"food",emoji:"🔥",
+   addr:"宜山路 2325号",desc:"마라탕. ~29위안/인. 合川路역 3번출구."},
+  {id:25,ko:"小杨 생전",cn:"小杨生煎",lat:31.2024,lng:121.3943,type:"food",emoji:"🥟",
+   addr:"古北路 1699号 B2",desc:"생전 명가. ~21위안/인. 08:00-20:30."},
+  {id:26,ko:"外婆家",cn:"外婆家(百盛优客)",lat:31.2143,lng:121.3934,type:"food",emoji:"🍲",
+   addr:"天山路 789号 百盛优客 5F",desc:"강절요리. ~68위안/인."}
 ];
 
-function isNearHotel(loc){
-  return Math.abs(loc.lat-HOTEL.lat)<NEARBY_DIST && Math.abs(loc.lng-HOTEL.lng)<NEARBY_DIST && loc.type!=='hotel';
-}
+const typeInfo={hotel:{label:"숙소",color:"var(--hotel)"},sight:{label:"관광지",color:"var(--sight)"},otaku:{label:"덕질",color:"var(--otaku)"},food:{label:"식당",color:"var(--food)"}};
+const types=["hotel","sight","otaku","food"];
+let activeFilters=new Set(types);
+let markers={};
+let selected=[];
+let distLine=null;
 
-const map=L.map('map',{zoomControl:false}).setView([31.2300,121.4750],14);
-L.control.zoom({position:'topright'}).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-  attribution:'&copy; OSM &copy; CARTO',subdomains:'abcd',maxZoom:19
+// Init map
+const map=L.map("map",{zoomControl:false}).setView([31.230,121.475],13);
+L.control.zoom({position:"topright"}).addTo(map);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{
+  attribution:"&copy; OSM &copy; CARTO",subdomains:"abcd",maxZoom:19
 }).addTo(map);
 
-let selected=[],distanceLine=null;
-const distanceBar=document.getElementById('distance-bar');
-function haversine(a,b,c,d){const R=6371000,t=x=>x*Math.PI/180,dL=t(c-a),dN=t(d-b),e=Math.sin(dL/2)**2+Math.cos(t(a))*Math.cos(t(c))*Math.sin(dN/2)**2;return R*2*Math.atan2(Math.sqrt(e),Math.sqrt(1-e))}
-function clearDistance(){selected=[];if(distanceLine){map.removeLayer(distanceLine);distanceLine=null}distanceBar.style.display='none'}
-function showDistance(){
-  const a=selected[0],b=selected[1],m=haversine(a.lat,a.lng,b.lat,b.lng),km=(m/1000).toFixed(1),walk=Math.round(m/80),taxi=Math.max(3,Math.round(m/400));
-  if(distanceLine)map.removeLayer(distanceLine);
-  distanceLine=L.polyline([[a.lat,a.lng],[b.lat,b.lng]],{color:'#2979ff',weight:3,dashArray:'10, 7',opacity:.85}).addTo(map);
-  distanceBar.innerHTML=`<span class="close-btn" onclick="clearDistance()">&times;</span><div class="route">${a.nameKo} → ${b.nameKo}</div><div class="stats">${km}km<small>도보 ${walk}분 · 택시 ~${taxi}분</small></div>`;
-  distanceBar.style.display='block';selected=[];
-}
-
-locations.forEach(loc=>{
-  const isHotel=loc.type==='hotel';
-  const near=isNearHotel(loc);
-  const r=isHotel?10:7;
-  L.circleMarker([loc.lat,loc.lng],{radius:r+4,fillColor:loc.color,color:'transparent',weight:0,fillOpacity:.18,interactive:false}).addTo(map);
-  const marker=L.circleMarker([loc.lat,loc.lng],{radius:r,fillColor:loc.color,color:'#fff',weight:2,opacity:1,fillOpacity:.95}).addTo(map);
-  if(isHotel)L.circleMarker([loc.lat,loc.lng],{radius:3,fillColor:'#fff',color:'transparent',weight:0,fillOpacity:.8,interactive:false}).addTo(map);
-
-  // Google Maps link: search by Chinese name, not coordinates
-  const gmapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.gq||loc.nameCn)}`;
-  const popup=`<div class="popup-title">${loc.nameKo}</div><div class="popup-subtitle">${loc.nameCn}</div><div class="popup-desc">${loc.desc}</div>${loc.distance?`<div class="popup-distance">${loc.distance}</div>`:''}<div class="popup-link"><a href="${gmapUrl}" target="_blank" rel="noopener">Google Maps →</a></div>`;
-  marker.bindPopup(popup,{className:'custom-popup',maxWidth:300});
-  marker.on('click',()=>{selected.push(loc);if(selected.length===2)showDistance()});
-
-  let cls='pin-label';
-  if(loc.type==='hotel')cls+=' pin-label-hotel';
-  else if(loc.type==='otaku')cls+=' pin-label-otaku';
-  else if(loc.type==='food')cls+=' pin-label-food';
-  const hoverCls=near?' hover-label':'';
-  const labelId='lbl'+Math.random().toString(36).substr(2,6);
-  const label=L.divIcon({className:'',html:`<div id="${labelId}" class="${cls}${hoverCls}">${loc.nameKo}</div>`,iconSize:[0,0],iconAnchor:[-9,5]});
-  L.marker([loc.lat,loc.lng],{icon:label,interactive:false}).addTo(map);
-  if(near){
-    marker.on('mouseover',()=>{const el=document.getElementById(labelId);if(el)el.classList.add('show')});
-    marker.on('mouseout',()=>{const el=document.getElementById(labelId);if(el)el.classList.remove('show')});
-  }
+// Filters
+const filtersEl=document.getElementById("filters");
+types.forEach(t=>{
+  const btn=document.createElement("button");
+  btn.className="filter-btn active";
+  btn.style.setProperty("--c",typeInfo[t].color);
+  btn.innerHTML=\`<span class="dot" style="background:\${typeInfo[t].color}"></span>\${typeInfo[t].label}\`;
+  btn.onclick=()=>{
+    if(activeFilters.has(t)){activeFilters.delete(t);btn.classList.remove("active")}
+    else{activeFilters.add(t);btn.classList.add("active")}
+    render();
+  };
+  filtersEl.appendChild(btn);
 });
 
-const centralLocs=locations.filter(l=>l.lng<121.55&&l.lat>31.15);
-map.fitBounds(L.latLngBounds(centralLocs.map(l=>[l.lat,l.lng])),{padding:[80,60]});
+// Haversine
+function hav(a,b,c,d){const R=6371000,r=x=>x*Math.PI/180,dL=r(c-a),dN=r(d-b),e=Math.sin(dL/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dN/2)**2;return R*2*Math.atan2(Math.sqrt(e),Math.sqrt(1-e))}
+
+// Distance
+const distBar=document.getElementById("dist-bar");
+function clearDist(){selected=[];if(distLine){map.removeLayer(distLine);distLine=null}distBar.style.display="none"}
+function showDist(){
+  const a=selected[0],b=selected[1];
+  const m=hav(a.lat,a.lng,b.lat,b.lng),km=(m/1000).toFixed(1),walk=Math.round(m/80),taxi=Math.max(3,Math.round(m/400));
+  if(distLine)map.removeLayer(distLine);
+  distLine=L.polyline([[a.lat,a.lng],[b.lat,b.lng]],{color:"#2979ff",weight:3,dashArray:"8,6",opacity:.8}).addTo(map);
+  distBar.innerHTML=\`<span class="close" onclick="clearDist()">&times;</span><div class="route">\${a.ko} → \${b.ko}</div><div class="stats">\${km}km<small>도보 \${walk}분 · 택시 ~\${taxi}분</small></div>\`;
+  distBar.style.display="block";
+  selected=[];
+}
+
+// Render
+function render(){
+  // Clear markers
+  Object.values(markers).forEach(m=>{map.removeLayer(m.marker);if(m.shadow)map.removeLayer(m.shadow)});
+  markers={};
+
+  const filtered=locations.filter(l=>activeFilters.has(l.type));
+  const listEl=document.getElementById("loc-list");
+  listEl.innerHTML="";
+  document.getElementById("loc-count").textContent=\`\${filtered.length}개 장소\`;
+
+  filtered.forEach(loc=>{
+    // Map marker
+    const colorMap={hotel:"#e53935",sight:"#f9a825",otaku:"#7c4dff",food:"#ff7043"};
+    const c=colorMap[loc.type];
+    const icon=L.divIcon({className:"",html:\`<div class="emoji-marker \${loc.type}" style="background:\${c}">\${loc.emoji}</div>\`,iconSize:[36,36],iconAnchor:[18,18],popupAnchor:[0,-20]});
+    const gmapUrl=\`https://www.google.com/maps/search/?api=1&query=\${loc.lat},\${loc.lng}\`;
+    const amapUrl=\`https://uri.amap.com/marker?position=\${loc.lng},\${loc.lat}&name=\${encodeURIComponent(loc.cn)}\`;
+    const popup=\`<div class="popup-head"><span class="popup-emoji">\${loc.emoji}</span><span class="popup-title">\${loc.ko}</span></div><div class="popup-cn">\${loc.cn}</div><div class="popup-addr">📍 \${loc.addr}</div><div class="popup-desc">\${loc.desc}</div><div class="popup-links"><a href="\${gmapUrl}" target="_blank">Google Maps ↗</a><a href="\${amapUrl}" target="_blank">高德地图 ↗</a></div>\`;
+
+    const marker=L.marker([loc.lat,loc.lng],{icon}).addTo(map);
+    marker.bindPopup(popup,{className:"custom-popup",maxWidth:300});
+    marker.on("click",()=>{selected.push(loc);if(selected.length===2)showDist()});
+    markers[loc.id]={marker};
+
+    // Sidebar item
+    const item=document.createElement("div");
+    item.className="loc-item";
+    item.innerHTML=\`<div class="loc-emoji">\${loc.emoji}</div><div class="loc-info"><div class="loc-name">\${loc.ko}</div><div class="loc-cn">\${loc.cn} · \${loc.addr}</div><div class="loc-desc">\${loc.desc}</div></div>\`;
+    item.onclick=()=>{
+      map.flyTo([loc.lat,loc.lng],16,{duration:.8});
+      marker.openPopup();
+      document.querySelectorAll(".loc-item").forEach(el=>el.classList.remove("highlight"));
+      item.classList.add("highlight");
+      // Mobile: close sidebar
+      if(window.innerWidth<=768)document.getElementById("sidebar").classList.remove("open");
+    };
+    listEl.appendChild(item);
+  });
+
+  // Fit bounds
+  if(filtered.length>1){
+    const central=filtered.filter(l=>l.lng<121.55&&l.lat>31.15);
+    if(central.length>1)map.fitBounds(L.latLngBounds(central.map(l=>[l.lat,l.lng])),{padding:[80,60]});
+  }
+}
+
+// Mobile sidebar
+function toggleSidebar(){
+  const sb=document.getElementById("sidebar");
+  sb.classList.toggle("open");
+}
+// Touch drag for mobile bottom sheet
+let touchStartY=0;
+document.getElementById("sidebar").addEventListener("touchstart",e=>{touchStartY=e.touches[0].clientY});
+document.getElementById("sidebar").addEventListener("touchmove",e=>{
+  const dy=e.touches[0].clientY-touchStartY;
+  const sb=document.getElementById("sidebar");
+  if(dy<-30)sb.classList.add("open");
+  if(dy>30)sb.classList.remove("open");
+});
+
+// Mobile handle
+if(window.innerWidth<=768){
+  document.getElementById("handle").style.display="block";
+  document.querySelector(".sidebar-toggle").style.display="flex";
+}
+window.addEventListener("resize",()=>{
+  const m=window.innerWidth<=768;
+  document.getElementById("handle").style.display=m?"block":"none";
+  document.querySelector(".sidebar-toggle").style.display=m?"flex":"none";
+});
+
+render();
 </script>
 </body>
 </html>
