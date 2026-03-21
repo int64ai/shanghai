@@ -43,7 +43,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .emoji-marker.sight{background:var(--sight)}
 .emoji-marker.otaku{background:var(--otaku)}
 .emoji-marker.food{background:var(--food)}
-.map-label{font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:600;color:#333;background:rgba(255,255,255,.88);padding:2px 7px;border-radius:6px;box-shadow:0 1px 6px rgba(0,0,0,.1);white-space:nowrap;pointer-events:none;border:1px solid rgba(0,0,0,.06);line-height:1.4;text-align:center}
+.map-label{font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#1a1a1a;background:rgba(255,255,255,.92);padding:4px 10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;border:1px solid rgba(0,0,0,.08);line-height:1.4;text-align:center;letter-spacing:0.3px}
 .name-tooltip{font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:600;padding:4px 10px;border-radius:8px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .custom-popup .leaflet-popup-content-wrapper{background:var(--bg);border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15)}
 .custom-popup .leaflet-popup-tip{background:var(--bg)}
@@ -115,9 +115,9 @@ const locations = [
 
   // ── 관광지 ──
   // 난징동루 보행가: 西藏中路(서)~河南中路(동), 약 1.2km
-  {id:2, ko:"난징동루 보행가", cn:"南京东路步行街", lat:31.2383, lng:121.4815,
+  {id:2, ko:"난징동루 보행가", cn:"南京东路步行街", lat:31.2390, lng:121.4820,
    type:"sight", emoji:"🛍️", addr:"南京东路", desc:"상하이 대표 보행자 거리. 야간 네온사인이 핵심.",
-   area:[[31.2381,121.474],[31.2383,121.476],[31.2385,121.478],[31.2386,121.48],[31.2387,121.482],[31.2389,121.484],[31.2392,121.486],[31.2396,121.4875],[31.24,121.489],[31.2394,121.489],[31.239,121.4875],[31.2386,121.486],[31.2383,121.484],[31.2381,121.482],[31.238,121.48],[31.2379,121.478],[31.2377,121.476],[31.2375,121.474]]},
+   area:[[31.2384,121.474],[31.2386,121.476],[31.2388,121.478],[31.2390,121.480],[31.2392,121.482],[31.2394,121.484],[31.2396,121.486],[31.2398,121.488],[31.2400,121.490],[31.2393,121.490],[31.2391,121.488],[31.2389,121.486],[31.2387,121.484],[31.2385,121.482],[31.2383,121.480],[31.2381,121.478],[31.2379,121.476],[31.2377,121.474]]},
 
   // 난징시루: 静安寺~人民广场 구간, 고급 쇼핑가
   {id:3, ko:"난징시루", cn:"南京西路", lat:31.2285, lng:121.4555,
@@ -132,7 +132,7 @@ const locations = [
   // 신천지: 黄陂南路·太仓路·马当路·兴业路 둘러싼 구역
   {id:5, ko:"신천지", cn:"新天地", lat:31.2225, lng:121.4720,
    type:"sight", emoji:"🍸", addr:"太仓路/马当路", desc:"石库门 건축 보존 지구. 카페, 바, 레스토랑.",
-   area:[[31.2248,121.4688],[31.225,121.47],[31.2251,121.4712],[31.2252,121.4725],[31.2252,121.4738],[31.2251,121.475],[31.224,121.4752],[31.2228,121.4754],[31.2216,121.4755],[31.2204,121.4756],[31.22,121.4745],[31.2198,121.473],[31.2197,121.4715],[31.2196,121.47],[31.2196,121.4688],[31.2208,121.4686],[31.222,121.4685],[31.2232,121.4686],[31.2244,121.4687]]},
+   area:[[31.2248,121.4690],[31.2248,121.4738],[31.2235,121.4740],[31.2220,121.4742],[31.2200,121.4743],[31.2198,121.4695],[31.2215,121.4692],[31.2230,121.4690],[31.2240,121.4689]]},
 
   // ✅ Photon 豫园 직접 매칭
   {id:6, ko:"예원", cn:"豫园", lat:31.2289, lng:121.4880,
@@ -168,7 +168,7 @@ const locations = [
 
   // ── 덕질 ──
   // ✅ Google Maps Place URL 확인 (!3d31.23718!4d121.48345)
-  {id:14, ko:"바이리엔ZX", cn:"百联ZX创趣场", lat:31.23718, lng:121.48345,
+  {id:14, ko:"바이리엔ZX", cn:"百联ZX创趣场", lat:31.2388, lng:121.4780,
    type:"otaku", emoji:"🎮", addr:"南京东路 340-372号", desc:"6층 이차원 상가. 50+ 브랜드. 6F 인형뽑기. 10-22시."},
 
   // ⚠️ Nominatim 南京东路300号
@@ -180,7 +180,7 @@ const locations = [
    type:"otaku", emoji:"📦", addr:"广西北路 252号 中福城", desc:"중고/피규어 거래 밀집."},
 
   // ✅ Photon 摩天轮(옥상 관람차) 매칭으로 확인
-  {id:17, ko:"징안 조이시티", cn:"上海静安大悦城", lat:31.2466, lng:121.4675,
+  {id:17, ko:"징안 조이시티", cn:"上海静安大悦城", lat:31.2446, lng:121.4675,
    type:"otaku", emoji:"🎡", addr:"西藏北路 166号", desc:"이차원 + 쇼핑 복합몰. 옥상 관람차."},
 
   // ✅ Photon 美罗城 직접 매칭
