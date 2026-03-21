@@ -40,7 +40,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .leaflet-control-zoom a{background:var(--card)!important;backdrop-filter:blur(12px);color:var(--text)!important;border:1px solid var(--border)!important;width:36px!important;height:36px!important;line-height:36px!important;font-size:16px!important}
 .emoji-marker{display:none}
 .map-label{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#1a1a1a;white-space:nowrap;pointer-events:none;text-align:center;transform:translateX(-50%);position:relative;left:50%}
-.marker-combo{display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:auto;cursor:pointer;width:max-content}
+.marker-combo{display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:auto;cursor:pointer;width:max-content;transform:translateX(-50%)}
 .marker-combo .pin{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;font-size:22px;box-shadow:0 4px 14px rgba(0,0,0,.25);border:3px solid #fff;transition:transform .2s cubic-bezier(.34,1.56,.64,1);position:relative}
 .marker-combo .pin::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff}
 .marker-combo:hover .pin{transform:scale(1.15)}
@@ -295,7 +295,7 @@ function render() {
     var icon = L.divIcon({
       className: "",
       html: '<div class="marker-combo"><div class="pin" style="background:' + c + '">' + loc.emoji + '</div><div class="tag">' + loc.ko + '</div></div>',
-      iconSize: [0,0], iconAnchor: [0,30], popupAnchor: [0,-40]
+      iconSize: [0,0], iconAnchor: [0,50], popupAnchor: [0,-56]
     });
 
     var gmapUrl = "https://www.google.com/maps/search/" + encodeURIComponent(loc.cn + " " + loc.addr + " 上海");
