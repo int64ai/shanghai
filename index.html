@@ -37,13 +37,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 #map{position:fixed;top:56px;left:var(--sidebar-w);right:0;bottom:0;z-index:1}
 .leaflet-control-zoom{border:none!important;box-shadow:var(--shadow)!important}
 .leaflet-control-zoom a{background:var(--card)!important;backdrop-filter:blur(12px);color:var(--text)!important;border:1px solid var(--border)!important;width:36px!important;height:36px!important;line-height:36px!important;font-size:16px!important}
-.emoji-marker{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;font-size:18px;box-shadow:0 3px 12px rgba(0,0,0,.2);border:2.5px solid #fff;transition:transform .15s;cursor:pointer}
+.emoji-marker{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;font-size:22px;box-shadow:0 3px 12px rgba(0,0,0,.2);border:3px solid #fff;transition:transform .15s;cursor:pointer}
 .emoji-marker:hover{transform:scale(1.2)}
 .emoji-marker.hotel{background:var(--hotel)}
 .emoji-marker.sight{background:var(--sight)}
 .emoji-marker.otaku{background:var(--otaku)}
 .emoji-marker.food{background:var(--food)}
-.map-label{font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#1a1a1a;background:rgba(255,255,255,.92);padding:4px 10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;border:1px solid rgba(0,0,0,.08);line-height:1.4;text-align:center;letter-spacing:0.3px}
+.map-label{font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:800;color:#111;background:rgba(255,255,255,.95);padding:6px 14px;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,.18);white-space:nowrap;pointer-events:none;border:1.5px solid rgba(0,0,0,.12);line-height:1.3;text-align:center;letter-spacing:0.5px;min-width:40px}
 .name-tooltip{font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:600;padding:4px 10px;border-radius:8px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .custom-popup .leaflet-popup-content-wrapper{background:var(--bg);border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15)}
 .custom-popup .leaflet-popup-tip{background:var(--bg)}
@@ -293,7 +293,7 @@ function render() {
     var icon = L.divIcon({
       className: "",
       html: '<div class="emoji-marker ' + loc.type + '" style="background:' + c + '">' + loc.emoji + '</div>',
-      iconSize: [36,36], iconAnchor: [18,18], popupAnchor: [0,-20]
+      iconSize: [42,42], iconAnchor: [21,21], popupAnchor: [0,-24]
     });
 
     var gmapUrl = "https://www.google.com/maps/search/" + encodeURIComponent(loc.cn + " " + loc.addr + " 上海");
@@ -314,7 +314,7 @@ function render() {
     var labelIcon = L.divIcon({
       className: "",
       html: '<div class="map-label">' + loc.ko + '</div>',
-      iconSize: [0,0], iconAnchor: [0,-22]
+      iconSize: [0,0], iconAnchor: [0,-28]
     });
     var lm = L.marker([loc.lat, loc.lng], {icon:labelIcon, interactive:false}).addTo(map);
     labelMarkers.push(lm);
@@ -369,6 +369,16 @@ window.addEventListener("resize", function() {
 });
 
 render();
+
+// Zoom-based label visibility
+map.on("zoomend", function() {
+  var z = map.getZoom();
+  var show = z >= 13;
+  labelMarkers.forEach(function(lm) {
+    var el = lm.getElement();
+    if (el) el.style.display = show ? "" : "none";
+  });
+});
 </script>
 </body>
 </html>
