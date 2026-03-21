@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>上海 4泊5日</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#ffffff;--card:rgba(255,255,255,.92);--text:#1a1a1a;--sub:#888;--border:rgba(0,0,0,.06);--shadow:0 8px 32px rgba(0,0,0,.08);--hotel:#e53935;--sight:#f9a825;--otaku:#7c4dff;--food:#ff7043;--accent:#2979ff;--sidebar-w:320px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;width:100vw}
 .header{position:fixed;top:0;left:0;right:0;height:56px;background:var(--card);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;padding:0 20px;gap:12px}
-.header h1{font-size:18px;font-weight:700;letter-spacing:1px}
+.header h1{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-size:20px;font-weight:700;letter-spacing:1.5px}
 .header .badge{font-size:11px;background:var(--accent);color:#fff;padding:2px 8px;border-radius:99px;font-weight:600}
 .header .hint{margin-left:auto;font-size:11px;color:var(--sub)}
 .sidebar{position:fixed;top:56px;left:0;bottom:0;width:var(--sidebar-w);background:var(--card);backdrop-filter:blur(20px);border-right:1px solid var(--border);z-index:900;display:flex;flex-direction:column;overflow:hidden;transition:transform .3s ease}
@@ -37,13 +38,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 #map{position:fixed;top:56px;left:var(--sidebar-w);right:0;bottom:0;z-index:1}
 .leaflet-control-zoom{border:none!important;box-shadow:var(--shadow)!important}
 .leaflet-control-zoom a{background:var(--card)!important;backdrop-filter:blur(12px);color:var(--text)!important;border:1px solid var(--border)!important;width:36px!important;height:36px!important;line-height:36px!important;font-size:16px!important}
-.emoji-marker{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;font-size:22px;box-shadow:0 3px 12px rgba(0,0,0,.2);border:3px solid #fff;transition:transform .15s;cursor:pointer}
-.emoji-marker:hover{transform:scale(1.2)}
-.emoji-marker.hotel{background:var(--hotel)}
-.emoji-marker.sight{background:var(--sight)}
-.emoji-marker.otaku{background:var(--otaku)}
-.emoji-marker.food{background:var(--food)}
-.map-label{font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:800;color:#111;background:rgba(255,255,255,.95);padding:6px 14px;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,.18);white-space:nowrap;pointer-events:none;border:1.5px solid rgba(0,0,0,.12);line-height:1.3;text-align:center;letter-spacing:0.5px;min-width:40px}
+.emoji-marker{display:none}
+.map-label{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-size:13px;font-weight:700;color:#1a1a1a;white-space:nowrap;pointer-events:none;text-align:center;transform:translateX(-50%);position:relative;left:50%}
+.marker-combo{display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:auto;cursor:pointer}
+.marker-combo .pin{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;font-size:22px;box-shadow:0 4px 14px rgba(0,0,0,.25);border:3px solid #fff;transition:transform .2s cubic-bezier(.34,1.56,.64,1);position:relative}
+.marker-combo .pin::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #fff}
+.marker-combo:hover .pin{transform:scale(1.15)}
+.marker-combo .tag{background:rgba(255,255,255,.96);padding:3px 10px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.08);font-size:13px;font-weight:700;color:#222;letter-spacing:0.2px;backdrop-filter:blur(8px);max-width:150px;overflow:hidden;text-overflow:ellipsis}
 .name-tooltip{font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:600;padding:4px 10px;border-radius:8px;border:none;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .custom-popup .leaflet-popup-content-wrapper{background:var(--bg);border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15)}
 .custom-popup .leaflet-popup-tip{background:var(--bg)}
@@ -292,8 +293,8 @@ function render() {
 
     var icon = L.divIcon({
       className: "",
-      html: '<div class="emoji-marker ' + loc.type + '" style="background:' + c + '">' + loc.emoji + '</div>',
-      iconSize: [42,42], iconAnchor: [21,21], popupAnchor: [0,-24]
+      html: '<div class="marker-combo"><div class="pin" style="background:' + c + '">' + loc.emoji + '</div><div class="tag">' + loc.ko + '</div></div>',
+      iconSize: [0,0], iconAnchor: [0,30], popupAnchor: [0,-40]
     });
 
     var gmapUrl = "https://www.google.com/maps/search/" + encodeURIComponent(loc.cn + " " + loc.addr + " 上海");
@@ -307,17 +308,11 @@ function render() {
 
     var marker = L.marker([loc.lat, loc.lng], {icon:icon}).addTo(map);
     marker.bindPopup(popup, {className:"custom-popup", maxWidth:300});
-    marker.bindTooltip(loc.ko, {direction:"top", offset:[0,-22], className:"name-tooltip"});
+
     marker.on("click", function() { selected.push(loc); if (selected.length === 2) showDist(); });
     markers[loc.id] = marker;
 
-    var labelIcon = L.divIcon({
-      className: "",
-      html: '<div class="map-label">' + loc.ko + '</div>',
-      iconSize: [0,0], iconAnchor: [0,-28]
-    });
-    var lm = L.marker([loc.lat, loc.lng], {icon:labelIcon, interactive:false}).addTo(map);
-    labelMarkers.push(lm);
+    // Label integrated into marker combo - no separate label needed
 
     var item = document.createElement("div");
     item.className = "loc-item";
@@ -370,15 +365,7 @@ window.addEventListener("resize", function() {
 
 render();
 
-// Zoom-based label visibility
-map.on("zoomend", function() {
-  var z = map.getZoom();
-  var show = z >= 13;
-  labelMarkers.forEach(function(lm) {
-    var el = lm.getElement();
-    if (el) el.style.display = show ? "" : "none";
-  });
-});
+
 </script>
 </body>
 </html>
